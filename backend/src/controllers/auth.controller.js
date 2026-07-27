@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { register } from "../services/auth.service.js";
+import { loginUser, register } from "../services/auth.service.js";
 import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res, next) => {
@@ -24,6 +24,44 @@ export const signUp = async (req, res, next) => {
         email: user.email,
         profileImage: user.profileImage,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logIn = async (req, res, next) => {
+  try {
+    const user = await loginUser(req.body);
+
+    const token = generateToken(user.email);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV == "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: "Login Successful",
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      message: "Logout successful",
     });
   } catch (error) {
     next(error);

@@ -13,6 +13,4 @@ app.use(
   }),
 );
 
-app.use("/", authRoute);
-
 export default app;

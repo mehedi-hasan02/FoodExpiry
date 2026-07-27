@@ -8,7 +8,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const connectDB = async () => {
   try {
     const connect = await mongoose.connect(uri);
-    console.log(`MongoDB Connected: ${connect}`);
+    console.log(`MongoDB Connected: ${process.env.DB_NAME}`);
   } catch (error) {
     console.log(error);
   }

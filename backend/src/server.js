@@ -5,6 +5,7 @@ import connectDB from "./config/dbConnect.js";
 import authRoute from "./routes/auth.route.js";
 import errorHandler from "./middleware/error.middleware.js";
 import foodRoute from "./routes/food.route.js";
+import userRoute from "./routes/user.route.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/", authRoute);
 app.use("/food", foodRoute);
+app.use("/user", userRoute);
 app.use(errorHandler);
 
 connectDB();

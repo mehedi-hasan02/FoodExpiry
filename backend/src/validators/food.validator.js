@@ -1,0 +1,27 @@
+export const validateAddFood = (req, res, next) => {
+  const { user, name, category, quantity, unit, expiryDate } = req.body;
+  if (
+    !user ||
+    !name ||
+    !category ||
+    quantity === undefined ||
+    !unit ||
+    !expiryDate
+  ) {
+    return res.status(400).json({
+      message: "All fields are required",
+    });
+  }
+
+  next();
+};
+
+export const validateUpdateFood = (req, res, next) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      message: "No data provided for update",
+    });
+  }
+
+  next();
+};

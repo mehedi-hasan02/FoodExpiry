@@ -4,6 +4,7 @@ import app from "./app.js";
 import connectDB from "./config/dbConnect.js";
 import authRoute from "./routes/auth.route.js";
 import errorHandler from "./middleware/error.middleware.js";
+import foodRoute from "./routes/food.route.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", authRoute);
+app.use("/food", foodRoute);
 app.use(errorHandler);
 
 connectDB();

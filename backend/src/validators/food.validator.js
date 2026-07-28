@@ -1,3 +1,5 @@
+import Food from "../models/food.model.js";
+
 export const validateAddFood = (req, res, next) => {
   const { user, name, category, quantity, unit, expiryDate } = req.body;
   if (
@@ -20,6 +22,18 @@ export const validateUpdateFood = (req, res, next) => {
   if (Object.keys(req.body).length === 0) {
     return res.status(400).json({
       message: "No data provided for update",
+    });
+  }
+
+  next();
+};
+
+export const validateDeleteFood = async (req, res, next) => {
+  const findFood = await Food.findById(req.params.id);
+
+  if (!findFood) {
+    return res.status(404).json({
+      message: "Food not found",
     });
   }
 

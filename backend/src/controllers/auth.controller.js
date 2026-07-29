@@ -5,7 +5,12 @@ import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res, next) => {
   try {
-    const user = await register(req.body);
+    // console.log(req.file);
+    const profileImage = req.file?.path;
+    const user = await register({
+      ...req.body,
+      profileImage,
+    });
 
     const token = generateToken(user.email);
 

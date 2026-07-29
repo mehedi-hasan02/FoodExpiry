@@ -2,9 +2,15 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 // import generateToken from "../utils/generateToken.js";
 import cookies from "cookie-parser";
+import uploadOnCloudinary from "../config/cloudinary.js";
 
 export const register = async (userData) => {
   const { name, email, password, profileImage } = userData;
+
+  let imageUrl = "";
+  if (profileImage) {
+    imageUrl = await uploadOnCloudinary(profileImage);
+  }
 
   const existUser = await User.findOne({ email });
 
@@ -20,7 +26,7 @@ export const register = async (userData) => {
     name,
     email,
     password: hashedPassword,
-    profileImage,
+    profileImage: imageUrl,
   });
 
   // const token = generateToken(email);

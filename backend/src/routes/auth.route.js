@@ -4,10 +4,16 @@ import {
   validateLogin,
   validateRegister,
 } from "../validators/auth.validator.js";
+import { upload } from "../middleware/multer.middleware.js";
 
 const authRoute = express(Router());
 
-authRoute.post("/signup", validateRegister, signUp);
+authRoute.post(
+  "/signup",
+  upload.single("profileImage"),
+  validateRegister,
+  signUp,
+);
 authRoute.post("/login", validateLogin, logIn);
 authRoute.post("/logout", logOut);
 

@@ -6,6 +6,7 @@ import authRoute from "./routes/auth.route.js";
 import errorHandler from "./middleware/error.middleware.js";
 import foodRoute from "./routes/food.route.js";
 import userRoute from "./routes/user.route.js";
+import cors from "cors";
 
 dotenv.config();
 

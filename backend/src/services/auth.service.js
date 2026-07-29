@@ -62,3 +62,7 @@ export const loginUser = async (userData) => {
 
   return user;
 };
+
+export const getUserDataService = async (email) => {
+  return await User.findOne({ email }).select("-password");
+};

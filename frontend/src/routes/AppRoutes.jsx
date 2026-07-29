@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import PublicRoutes from "./PublicRoutes";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import PrivateRoutes from "./PrivateRoutes";
+import Home from "../pages/Home";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +23,16 @@ const AppRoutes = () => {
           <PublicRoutes>
             <Register />
           </PublicRoutes>
+        }
+      />
+
+      {/* private routes */}
+      <Route
+        path="/"
+        element={
+          <PrivateRoutes>
+            <Home />
+          </PrivateRoutes>
         }
       />
     </Routes>

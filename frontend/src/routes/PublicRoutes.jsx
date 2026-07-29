@@ -1,9 +1,11 @@
 import { Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
-const PublicRoute = ({ children }) => {
-  const isAuthenticated = false;
+const PublicRoutes = ({ children }) => {
+  const { userData } = useContext(AuthContext);
 
-  return !isAuthenticated ? children : <Navigate to="/" replace />;
+  return userData ? <Navigate to="/" replace /> : children;
 };
 
-export default PublicRoute;
+export default PublicRoutes;

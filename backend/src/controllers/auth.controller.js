@@ -1,11 +1,15 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { loginUser, register } from "../services/auth.service.js";
+import {
+  getUserDataService,
+  loginUser,
+  register,
+} from "../services/auth.service.js";
 import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res, next) => {
   try {
-    // console.log(req.file);
+    // console.log();
     const profileImage = req.file?.path;
     const user = await register({
       ...req.body,
@@ -67,6 +71,26 @@ export const logOut = async (req, res, next) => {
 
     return res.status(200).json({
       message: "Logout successful",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserDataController = async (req, res, next) => {
+  try {
+    const user = await getUserDataService(req.user.email);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user,
     });
   } catch (error) {
     next(error);

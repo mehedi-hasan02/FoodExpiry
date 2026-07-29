@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
+  const { server_url } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -12,8 +15,23 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(
+        `${server_url}/login`,
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

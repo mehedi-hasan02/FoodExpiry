@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import {
@@ -16,6 +16,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [preview, setPreview] = useState(null);
   const { server_url } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -53,6 +54,7 @@ const Register = () => {
       });
 
       console.log(res.data);
+      navigate("/");
     } catch (error) {
       console.error(error.response?.data || error.message);
     }

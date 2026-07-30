@@ -1,3 +1,4 @@
+import uploadOnCloudinary from "../config/cloudinary.js";
 import Food from "../models/food.model.js";
 
 export const insertFood = async (data) => {
@@ -14,6 +15,11 @@ export const insertFood = async (data) => {
     notes,
   } = data;
 
+  let imageUrl = "";
+  if (image) {
+    imageUrl = await uploadOnCloudinary(image);
+  }
+
   const food = await Food.create({
     user,
     name,
@@ -21,7 +27,7 @@ export const insertFood = async (data) => {
     quantity,
     unit,
     expiryDate,
-    image,
+    image: imageUrl,
     location,
     status,
     notes,
@@ -47,6 +53,14 @@ export const deleteFoodService = async (id) => {
 
 export const getAllFoodService = async () => {
   const foods = await Food.find();
+
+  return foods;
+};
+
+export const getMyFoodService = async (id) => {
+  // console.log(id);
+  const foods = await Food.find({ user: id });
+  // console.log(foods);
 
   return foods;
 };

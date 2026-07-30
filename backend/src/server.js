@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", authRoute);
-app.use("/food", foodRoute);
+app.use("/", foodRoute);
 app.use("/user", userRoute);
 app.use(errorHandler);
 

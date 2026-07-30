@@ -3,7 +3,11 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 const PublicRoutes = ({ children }) => {
-  const { userData } = useContext(AuthContext);
+  const { userData, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return userData ? <Navigate to="/" replace /> : children;
 };

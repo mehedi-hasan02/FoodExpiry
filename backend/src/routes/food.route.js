@@ -4,6 +4,7 @@ import {
   deleteFoodController,
   getAllFoodController,
   getFoodByIdController,
+  getMyFoodController,
   searchFoodController,
   updateFood,
 } from "../controllers/food.controller.js";
@@ -12,17 +13,26 @@ import {
   validateDeleteFood,
   validateUpdateFood,
 } from "../validators/food.validator.js";
+import { upload } from "../middleware/multer.middleware.js";
+import { authMiddleWare } from "../middleware/auth.middleware.js";
 
 const foodRoute = express(Router());
 
-foodRoute.post("/", validateAddFood, addFood);
+foodRoute.post(
+  "/food",
+  upload.single("image"),
+  authMiddleWare,
+  validateAddFood,
+  addFood,
+);
 
-foodRoute.get("/", getAllFoodController);
-foodRoute.get("/search", searchFoodController);
-foodRoute.get("/:id", getFoodByIdController);
+foodRoute.get("/food", getAllFoodController);
+foodRoute.get("/myfoods", authMiddleWare, getMyFoodController);
+foodRoute.get("/food/search", searchFoodController);
+foodRoute.get("/food/:id", getFoodByIdController);
 
-foodRoute.put("/:id", validateUpdateFood, updateFood);
+foodRoute.put("/food/:id", upload.single("image"), authMiddleWare, updateFood);
 
-foodRoute.delete("/:id", validateDeleteFood, deleteFoodController);
+foodRoute.delete("/food/:id", validateDeleteFood, deleteFoodController);
 
 export default foodRoute;

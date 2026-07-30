@@ -16,7 +16,9 @@ export const signUp = async (req, res, next) => {
       profileImage,
     });
 
-    const token = generateToken(user.email);
+    // console.log(user);
+
+    const token = generateToken(user._id, user.email);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -43,7 +45,7 @@ export const logIn = async (req, res, next) => {
   try {
     const user = await loginUser(req.body);
 
-    const token = generateToken(user.email);
+    const token = generateToken(user._id, user.email);
 
     res.cookie("token", token, {
       httpOnly: true,

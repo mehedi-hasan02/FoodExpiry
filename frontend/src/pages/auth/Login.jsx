@@ -1,13 +1,15 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, replace, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const { server_url } = useContext(AuthContext);
+  const { server_url, setUserData } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -28,9 +30,16 @@ const Login = () => {
         },
       );
 
-      console.log(res);
+      if (res) {
+        setUserData(res.data.user);
+        toast.success(res.data.message);
+        navigate("/", { replace: true });
+      }
+
+      // console.log(res.data.user);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response?.data?.message || error.message);
+      // console.log(error.response?.data?.message);
     }
   };
 

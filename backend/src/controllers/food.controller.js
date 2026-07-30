@@ -2,6 +2,7 @@ import {
   deleteFoodService,
   getAllFoodService,
   getFoodByIdService,
+  getMyFoodService,
   insertFood,
   searchFoodService,
   updateFoodService,
@@ -9,7 +10,11 @@ import {
 
 export const addFood = async (req, res, next) => {
   try {
-    const food = await insertFood(req.body);
+    let image = req.file?.path;
+    const food = await insertFood({
+      ...req.body,
+      image,
+    });
 
     res.status(201).json({
       message: "Food inserted successfully",
@@ -44,6 +49,7 @@ export const deleteFoodController = async (req, res, next) => {
     next(error);
   }
 };
+
 export const getAllFoodController = async (req, res, next) => {
   try {
     const allFoods = await getAllFoodService();
@@ -56,6 +62,22 @@ export const getAllFoodController = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getMyFoodController = async (req, res, next) => {
+  try {
+    // console.log("hello");
+    const foods = await getMyFoodService(req.user.id);
+    // console.log(foods);
+
+    res.status(200).json({
+      success: true,
+      foods,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getFoodByIdController = async (req, res, next) => {
   try {
     const food = await getFoodByIdService(req.params.id);
@@ -72,6 +94,7 @@ export const getFoodByIdController = async (req, res, next) => {
     next(error);
   }
 };
+
 export const searchFoodController = async (req, res, next) => {
   try {
     const { name, category, location, status } = req.query;

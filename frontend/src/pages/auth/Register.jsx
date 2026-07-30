@@ -11,11 +11,12 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [preview, setPreview] = useState(null);
-  const { server_url } = useContext(AuthContext);
+  const { server_url, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -53,10 +54,16 @@ const Register = () => {
         withCredentials: true,
       });
 
-      console.log(res.data);
-      navigate("/");
+      if (res) {
+        setUserData(res.data.user);
+        toast.success(res.data.message);
+        navigate("/", { replace: true });
+      }
+
+      // console.log(res.data.user);
     } catch (error) {
-      console.error(error.response?.data || error.message);
+      toast.error(error.response?.data.message || error.message);
+      // console.error(error.response?.data || error.message);
     }
   };
 

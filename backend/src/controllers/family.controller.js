@@ -3,6 +3,7 @@ import {
   createFamilyService,
   getFamilyOwnerService,
   getFamilyService,
+  removeMemberService,
 } from "../services/family.service.js";
 
 export const createFamilyController = async (req, res, next) => {
@@ -78,6 +79,22 @@ export const getFamilyOwnerController = async (req, res, next) => {
     res.status(200).json({
       success: true,
       owner,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeMemberController = async (req, res, next) => {
+  try {
+    const { memberId } = req.params;
+
+    const family = await removeMemberService(req.user.id, memberId);
+
+    res.status(200).json({
+      success: true,
+      message: "Member removed successfully",
+      family,
     });
   } catch (error) {
     next(error);

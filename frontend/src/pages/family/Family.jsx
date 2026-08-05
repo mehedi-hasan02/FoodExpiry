@@ -137,7 +137,12 @@ const Family = () => {
       {/* Members */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
         {members.map((member) => (
-          <FamilyCard key={member._id} member={member} owner={owner} />
+          <FamilyCard
+            key={member._id}
+            member={member}
+            owner={owner}
+            getFamilyMembers={getFamilyMembers}
+          />
         ))}
       </div>
     </div>

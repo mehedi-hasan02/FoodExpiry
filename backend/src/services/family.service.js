@@ -105,3 +105,28 @@ export const getFamilyOwnerService = async (id) => {
 
   return owner;
 };
+
+export const removeMemberService = async (ownerId, memberId) => {
+  if (ownerId === memberId) {
+    const error = new Error("Can't remove your self");
+    error.statusCode = 404;
+    throw error;
+  }
+  const family = await Family.findOne({ owner: ownerId });
+
+  if (!family) {
+    const error = new Error("Family not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  family.members.pull({ user: memberId });
+
+  await family.save();
+
+  await User.findByIdAndUpdate(memberId, {
+    family: null,
+  });
+
+  return family;
+};

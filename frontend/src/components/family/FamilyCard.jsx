@@ -1,11 +1,30 @@
+import { useContext } from "react";
 import { FaUser, FaEnvelope, FaTrash, FaCrown, FaUsers } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const FamilyCard = ({ member, owner }) => {
+const FamilyCard = ({ member, owner, getFamilyMembers }) => {
+  const { server_url } = useContext(AuthContext);
   const defaultImage =
     "https://ui-avatars.com/api/?name=" + encodeURIComponent(member.name);
 
   const handelRemoveMember = async (id) => {
-    console.log(id);
+    try {
+      const res = await axios.delete(`${server_url}/family/member/${id}`, {
+        withCredentials: true,
+      });
+
+      if (res.status === 200) {
+        getFamilyMembers();
+        toast.success(res.data.message);
+      }
+
+      // console.log(res.data);
+    } catch (error) {
+      // console.log(error);
+      toast.error(error.response.data.message || "Something went wrong");
+    }
   };
 
   // console.log(member);

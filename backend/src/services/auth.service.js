@@ -54,7 +54,7 @@ export const loginUser = async (userData) => {
   }
 
   const user = {
-    id: existUser._id,
+    id: existUser.id,
     name: existUser.name,
     email: existUser.email,
     profileImage: existUser.profileImage,
@@ -63,6 +63,6 @@ export const loginUser = async (userData) => {
   return user;
 };
 
-export const getUserDataService = async (email) => {
-  return await User.findOne({ email }).select("-password");
-};
+// export const getUserDataService = async (email) => {
+//   return await User.findOne({ email }).select("-password");
+// };

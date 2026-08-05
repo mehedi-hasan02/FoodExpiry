@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import {
-  getUserDataController,
+  // getUserDataController,
   logIn,
   logOut,
   signUp,
@@ -22,6 +22,6 @@ authRoute.post(
 );
 authRoute.post("/login", validateLogin, logIn);
 authRoute.post("/logout", logOut);
-authRoute.get("/me", authMiddleWare, getUserDataController);
+// authRoute.get("/me", authMiddleWare, getUserDataController);
 
 export default authRoute;

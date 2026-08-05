@@ -70,6 +70,11 @@ const foodSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    // family: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Family",
+    //   required: true,
+    // },
   },
   {
     timestamps: true,

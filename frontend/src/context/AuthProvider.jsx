@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
 
   const getUserData = async () => {
     try {
-      const { data } = await axios.get(`${server_url}/me`, {
+      const { data } = await axios.get(`${server_url}/user/me`, {
         withCredentials: true,
       });
 
@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
     server_url,
     userData,
     setUserData,
+    getUserData,
     loading,
   };
 

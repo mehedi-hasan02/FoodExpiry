@@ -7,6 +7,7 @@ import errorHandler from "./middleware/error.middleware.js";
 import foodRoute from "./routes/food.route.js";
 import userRoute from "./routes/user.route.js";
 import cors from "cors";
+import familyRoute from "./routes/family.route.js";
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ app.get("/", (req, res) => {
 
 app.use("/", authRoute);
 app.use("/", foodRoute);
-app.use("/user", userRoute);
+app.use("/", userRoute);
+app.use("/", familyRoute);
 app.use(errorHandler);
 
 connectDB();

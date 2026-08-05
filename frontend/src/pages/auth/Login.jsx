@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { server_url, setUserData } = useContext(AuthContext);
+  const { server_url, setUserData, getUserData } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -32,6 +32,7 @@ const Login = () => {
 
       if (res) {
         setUserData(res.data.user);
+        await getUserData();
         toast.success(res.data.message);
         navigate("/", { replace: true });
       }

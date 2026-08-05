@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import MainLayout from "../components/layout/MainLayout";
 import AddFood from "../pages/food/AddFood";
 import MyFood from "../pages/food/MyFood";
+import Family from "../pages/family/Family";
 
 const AppRoutes = () => {
   return (
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/my-foods" element={<MyFood />} />
         <Route path="/add-food" element={<AddFood />} />
+        <Route path="/family-member" element={<Family />} />
       </Route>
     </Routes>
   );

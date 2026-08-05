@@ -1,5 +1,6 @@
 import {
   getAllUserService,
+  getLoginUserService,
   getUserByEmailService,
   updateUserDataService,
   updateUserPasswordService,
@@ -24,6 +25,23 @@ export const getUserByEmailController = async (req, res, next) => {
   try {
     const { email } = req.params;
     const user = await getUserByEmailService(email);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLoginUserController = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const user = await getLoginUserService(id);
 
     if (!user) {
       return res.status(404).json({

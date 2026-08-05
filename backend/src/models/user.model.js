@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
     profileImage: {
       type: String,
     },
+    family: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Family",
+      default: null,
+    },
   },
   { timestamps: true },
 );

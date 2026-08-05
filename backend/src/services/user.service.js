@@ -13,6 +13,10 @@ export const getUserByEmailService = async (email) => {
   return user;
 };
 
+export const getLoginUserService = async (id) => {
+  return await User.findById(id).select("-password");
+};
+
 export const updateUserDataService = async (data) => {
   const { name, email, profileImage } = data;
 

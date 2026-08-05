@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import {
-  getUserDataService,
+  // getUserDataService,
   loginUser,
   register,
 } from "../services/auth.service.js";
@@ -16,9 +16,14 @@ export const signUp = async (req, res, next) => {
       profileImage,
     });
 
+    // console.log("From Reg");
     // console.log(user);
+    // console.log(user._id);
+    // console.log(user.email);
 
     const token = generateToken(user._id, user.email);
+
+    // console.log(user._id);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -45,7 +50,12 @@ export const logIn = async (req, res, next) => {
   try {
     const user = await loginUser(req.body);
 
-    const token = generateToken(user._id, user.email);
+    // console.log("From login");
+    // console.log(user);
+    // console.log(user.id);
+    // console.log(user.email);
+
+    const token = generateToken(user.id, user.email);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -79,22 +89,22 @@ export const logOut = async (req, res, next) => {
   }
 };
 
-export const getUserDataController = async (req, res, next) => {
-  try {
-    const user = await getUserDataService(req.user.email);
+// export const getUserDataController = async (req, res, next) => {
+//   try {
+//     const user = await getUserDataService(req.user.email);
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
 
-    return res.status(200).json({
-      success: true,
-      user,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       user,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };

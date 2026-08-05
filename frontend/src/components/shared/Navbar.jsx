@@ -1,7 +1,30 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaLeaf, FaBars } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { server_url, setUserData } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handelLogout = async () => {
+    try {
+      const res = await axios.post(
+        `${server_url}/logout`,
+        {},
+        { withCredentials: true },
+      );
+
+      if (res.status == 200) {
+        setUserData(null);
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   const navLinks = (
     <>
       <li>
@@ -39,12 +62,12 @@ const Navbar = () => {
 
       <li>
         <NavLink
-          to="/dashboard"
+          to="/family-member"
           className={({ isActive }) =>
             isActive ? "text-green-500 font-semibold" : ""
           }
         >
-          Dashboard
+          Family Members
         </NavLink>
       </li>
     </>
@@ -98,15 +121,17 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-black rounded-box w-52"
           >
             <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+
+            <li>
               <Link to="/profile">Profile</Link>
             </li>
 
             <li>
-              <Link to="/settings">Settings</Link>
-            </li>
-
-            <li>
-              <button className="text-red-500">Logout</button>
+              <button onClick={handelLogout} className="text-red-500">
+                Logout
+              </button>
             </li>
           </ul>
         </div>

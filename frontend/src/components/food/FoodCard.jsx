@@ -7,11 +7,9 @@ import {
   FaTrash,
   FaEye,
 } from "react-icons/fa";
-import UpdateFoodModal from "./UpdateFoodModal";
-import { useState } from "react";
 
-const FoodCard = ({ food, userData, getMyFoods, onDelete }) => {
-  const [selectedFood, setSelectedFood] = useState(null);
+const FoodCard = ({ food, userData, onDelete, setSelectedFood }) => {
+  // const [selectedFood, setSelectedFood] = useState(null);
   const isOwner =
     food.user?._id === userData?._id || food.user === userData?._id;
 
@@ -114,11 +112,11 @@ const FoodCard = ({ food, userData, getMyFoods, onDelete }) => {
                 Edit
               </button>
 
-              <UpdateFoodModal
+              {/* <UpdateFoodModal
                 food={selectedFood}
                 getMyFoods={getMyFoods}
                 setSelectedFood={setSelectedFood}
-              />
+              /> */}
 
               <button
                 onClick={() => onDelete(food._id)}

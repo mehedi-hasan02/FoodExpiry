@@ -28,11 +28,16 @@ foodRoute.post(
 
 foodRoute.get("/food", getAllFoodController);
 foodRoute.get("/myfoods", authMiddleWare, getMyFoodController);
-foodRoute.get("/food/search", searchFoodController);
-foodRoute.get("/food/:id", getFoodByIdController);
+foodRoute.get("/food/search", authMiddleWare, searchFoodController);
+foodRoute.get("/food/:id", authMiddleWare, getFoodByIdController);
 
 foodRoute.put("/food/:id", upload.single("image"), authMiddleWare, updateFood);
 
-foodRoute.delete("/food/:id", validateDeleteFood, deleteFoodController);
+foodRoute.delete(
+  "/food/:id",
+  authMiddleWare,
+  validateDeleteFood,
+  deleteFoodController,
+);
 
 export default foodRoute;

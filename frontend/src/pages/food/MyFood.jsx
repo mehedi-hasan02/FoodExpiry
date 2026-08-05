@@ -1,21 +1,24 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import { FaSearch, FaFilter, FaSortAmountDown, FaPlus } from "react-icons/fa";
+import { FaSearch, FaFilter, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import FoodCard from "../../components/food/FoodCard";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthProvider";
+import UpdateFoodModal from "../../components/food/UpdateFoodModal";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MyFood = () => {
   // Replace with API data later
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedFood, setSelectedFood] = useState(null);
 
   const { server_url } = useContext(AuthContext);
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
-  //   const [sort, setSort] = useState("latest");
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -58,19 +61,6 @@ const MyFood = () => {
       data = data.filter((food) => food.status === status);
     }
 
-    // switch (sort) {
-    //   case "expiry":
-    //     data.sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
-    //     break;
-
-    //   case "name":
-    //     data.sort((a, b) => a.name.localeCompare(b.name));
-    //     break;
-
-    //   default:
-    //     data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    // }
-
     return data;
   }, [foods, search, category, status]);
 
@@ -81,8 +71,32 @@ const MyFood = () => {
     currentPage * foodsPerPage,
   );
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This member will be removed from your family.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Remove",
+        cancelButtonText: "Cancel",
+      });
+
+      if (!result.isConfirmed) return;
+
+      const res = await axios.delete(`${server_url}/food/${id}`, {
+        withCredentials: true,
+      });
+
+      if (res.status === 200) {
+        getMyFoods();
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
   };
 
   return (
@@ -152,21 +166,6 @@ const MyFood = () => {
               <option>Expired</option>
             </select>
           </label>
-
-          {/* Sort */}
-          {/* <label className="select select-bordered rounded-xl flex items-center gap-2">
-            <FaSortAmountDown className="text-green-500" />
-
-            <select
-              className="grow bg-transparent outline-none"
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-            >
-              <option value="latest">Latest</option>
-              <option value="expiry">Expiry Date</option>
-              <option value="name">Name (A-Z)</option>
-            </select>
-          </label> */}
         </div>
       </div>
 
@@ -180,8 +179,15 @@ const MyFood = () => {
                 food={food}
                 getMyFoods={getMyFoods}
                 onDelete={() => handleDelete(food._id)}
+                setSelectedFood={setSelectedFood} // pass setter
               />
             ))}
+
+            <UpdateFoodModal
+              food={selectedFood}
+              getMyFoods={getMyFoods}
+              setSelectedFood={setSelectedFood}
+            />
           </div>
 
           {/* Pagination */}

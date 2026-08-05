@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { FaUser, FaEnvelope, FaTrash, FaCrown, FaUsers } from "react-icons/fa";
+import { FaTrash, FaCrown, FaUsers } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const FamilyCard = ({ member, owner, getFamilyMembers }) => {
   const { server_url } = useContext(AuthContext);
@@ -11,6 +12,19 @@ const FamilyCard = ({ member, owner, getFamilyMembers }) => {
 
   const handelRemoveMember = async (id) => {
     try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This member will be removed from your family.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Remove",
+        cancelButtonText: "Cancel",
+      });
+
+      if (!result.isConfirmed) return;
+
       const res = await axios.delete(`${server_url}/family/member/${id}`, {
         withCredentials: true,
       });
@@ -19,66 +33,58 @@ const FamilyCard = ({ member, owner, getFamilyMembers }) => {
         getFamilyMembers();
         toast.success(res.data.message);
       }
-
-      // console.log(res.data);
     } catch (error) {
-      // console.log(error);
-      toast.error(error.response.data.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
   // console.log(member);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300">
-      <div className="flex flex-col items-center">
-        <img
-          src={member.profileImage || defaultImage}
-          alt={member.name}
-          className="w-24 h-24 rounded-full object-cover border-4 border-green-100"
-        />
+    <div className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg">
+      <div className="flex items-center gap-4">
+        {/* Avatar */}
+        <div className="relative">
+          <img
+            src={member.profileImage || defaultImage}
+            alt={member.name}
+            className="h-16 w-16 rounded-full object-cover ring-2 ring-green-100"
+          />
 
-        <h2 className="text-xl font-bold mt-4">{member.name}</h2>
+          <span
+            className={`absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow ${
+              member.role === "Owner" ? "bg-amber-500" : "bg-emerald-500"
+            }`}
+          >
+            {member.role === "Owner" ? (
+              <FaCrown className="text-xs" />
+            ) : (
+              <FaUsers className="text-xs" />
+            )}
+          </span>
+        </div>
 
-        <div
-          className={`badge mt-2 ${
-            member.role === "Owner" ? "badge-warning" : "badge-success"
-          }`}
-        >
-          {member.role === "Owner" ? (
-            <>
-              <FaCrown />
-              Owner
-            </>
-          ) : (
-            <>
-              <FaUsers />
-              Member
-            </>
-          )}
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <h2 className="truncate text-lg font-semibold text-gray-800">
+            {member.name}
+          </h2>
+
+          <p className="truncate text-sm text-gray-500">{member.email}</p>
+
+          <p className="mt-1 text-xs text-gray-400">
+            Joined {new Date(member.joinedAt).toLocaleDateString()}
+          </p>
         </div>
       </div>
 
-      <div className="divider"></div>
-
-      <div className="space-y-3">
-        <div className="flex items-center gap-3">
-          <FaEnvelope className="text-green-500" />
-          <span className="text-sm break-all">{member.email}</span>
-        </div>
-
-        <div className="text-sm text-gray-500">
-          Joined: {new Date(member.joinedAt).toLocaleDateString()}
-        </div>
-      </div>
-
-      {owner && (
+      {owner && member.role !== "Owner" && (
         <button
           onClick={() => handelRemoveMember(member._id)}
-          className="btn btn-error btn-outline w-full mt-6"
+          className="btn btn-error btn-soft btn-sm mt-4 w-full"
         >
-          <FaTrash />
-          Remove Member
+          <FaTrash className="text-xs" />
+          Remove
         </button>
       )}
     </div>

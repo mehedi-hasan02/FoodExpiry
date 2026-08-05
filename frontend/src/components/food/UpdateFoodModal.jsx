@@ -26,6 +26,8 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
     ...imageRegister
   } = register("image");
 
+  // console.log(food);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -99,6 +101,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
                 <FaAppleAlt className="text-green-500" />
                 <input
+                  // value={food.name}
                   type="text"
                   placeholder="Milk"
                   className="grow"

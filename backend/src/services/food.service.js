@@ -1,6 +1,7 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Family from "../models/family.model.js";
 import Food from "../models/food.model.js";
+import { getExpiryStatus } from "../utils/calculateExpiry.js";
 
 export const insertFood = async (data) => {
   const {
@@ -21,6 +22,8 @@ export const insertFood = async (data) => {
     imageUrl = await uploadOnCloudinary(image);
   }
 
+  const expiryStatus = getExpiryStatus(expiryDate);
+
   const food = await Food.create({
     user,
     name,
@@ -30,7 +33,7 @@ export const insertFood = async (data) => {
     expiryDate,
     image: imageUrl,
     location,
-    status,
+    status: expiryStatus,
     notes,
   });
 
@@ -129,4 +132,23 @@ export const searchFoodService = async (
     };
   }
   return await Food.find(query);
+};
+
+export const foodNeedToReminder = async () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const threeDaysLater = new Date(today);
+  threeDaysLater.setDate(today.getDate() + 3);
+
+  const food = await Food.find({
+    expiryDate: {
+      $gte: today,
+      $lte: threeDaysLater,
+    },
+  })
+    .populate("user", "name email")
+    .lean();
+
+  return food;
 };

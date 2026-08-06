@@ -8,6 +8,7 @@ import foodRoute from "./routes/food.route.js";
 import userRoute from "./routes/user.route.js";
 import cors from "cors";
 import familyRoute from "./routes/family.route.js";
+import startCronJobs from "./config/cron.js";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use("/", foodRoute);
 app.use("/", userRoute);
 app.use("/", familyRoute);
 app.use(errorHandler);
+
+startCronJobs();
 
 connectDB();
 

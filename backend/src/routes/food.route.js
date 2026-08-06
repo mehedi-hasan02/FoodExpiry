@@ -27,7 +27,7 @@ foodRoute.post(
   addFood,
 );
 
-foodRoute.get("/food", getAllFoodController);
+foodRoute.get("/food", authMiddleWare, getAllFoodController);
 foodRoute.get("/myfoods", authMiddleWare, getMyFoodController);
 foodRoute.get("/food/family", authMiddleWare, getFamilyFoodController);
 foodRoute.get("/food/search", authMiddleWare, searchFoodController);

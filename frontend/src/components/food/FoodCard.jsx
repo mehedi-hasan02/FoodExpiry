@@ -75,7 +75,13 @@ const FoodCard = ({ food, userData, onDelete, setSelectedFood }) => {
 
           <div className="flex items-center gap-2">
             <FaCalendarAlt className="text-green-500" />
-            <span>{new Date(food.expiryDate).toLocaleDateString()}</span>
+            <span>
+              {new Date(food.expiryDate).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
           </div>
         </div>
 

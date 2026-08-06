@@ -14,7 +14,7 @@ const MyFood = () => {
   const [loading, setLoading] = useState(true);
   const [selectedFood, setSelectedFood] = useState(null);
 
-  const { server_url } = useContext(AuthContext);
+  const { server_url, userData } = useContext(AuthContext);
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -177,6 +177,7 @@ const MyFood = () => {
               <FoodCard
                 key={food._id}
                 food={food}
+                userData={userData}
                 getMyFoods={getMyFoods}
                 onDelete={() => handleDelete(food._id)}
                 setSelectedFood={setSelectedFood} // pass setter

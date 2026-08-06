@@ -6,32 +6,37 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthProvider";
 import FoodCard from "../components/food/FoodCard";
 import { Link } from "react-router-dom";
+import UpdateFoodModal from "../components/food/UpdateFoodModal";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const { server_url, userData } = useContext(AuthContext);
 
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedFood, setSelectedFood] = useState(null);
 
   // Search & Filter
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [status, setStatus] = useState("All");
-  const [sortBy, setSortBy] = useState("Newest");
+  // const [sortBy, setSortBy] = useState("Newest");
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const foodsPerPage = 8;
 
-  const getFoods = async () => {
+  const getMyFoods = async () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get(`${server_url}/food`, {
+      const { data } = await axios.get(`${server_url}/food/family`, {
         withCredentials: true,
       });
 
-      setFoods(data.foods || []);
+      setFoods(data.familyFoods || []);
+
+      // console.log(data.familyFoods);
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
@@ -40,26 +45,34 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getFoods();
+    getMyFoods();
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this food?",
-    );
-
-    if (!confirmDelete) return;
-
     try {
-      await axios.delete(`${server_url}/food/${id}`, {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This member will be removed from your family.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Remove",
+        cancelButtonText: "Cancel",
+      });
+
+      if (!result.isConfirmed) return;
+
+      const res = await axios.delete(`${server_url}/food/${id}`, {
         withCredentials: true,
       });
 
-      toast.success("Food deleted successfully");
-
-      setFoods((prev) => prev.filter((food) => food._id !== id));
+      if (res.status === 200) {
+        getMyFoods();
+        toast.success(res.data.message);
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Delete failed");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -84,29 +97,29 @@ const Home = () => {
     }
 
     // Sorting
-    switch (sortBy) {
-      case "Newest":
-        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        break;
+    // switch (sortBy) {
+    //   case "Newest":
+    //     data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    //     break;
 
-      case "Oldest":
-        data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-        break;
+    //   case "Oldest":
+    //     data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    //     break;
 
-      case "Expiry":
-        data.sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
-        break;
+    //   case "Expiry":
+    //     data.sort((a, b) => new Date(a.expiryDate) - new Date(b.expiryDate));
+    //     break;
 
-      case "A-Z":
-        data.sort((a, b) => a.name.localeCompare(b.name));
-        break;
+    //   case "A-Z":
+    //     data.sort((a, b) => a.name.localeCompare(b.name));
+    //     break;
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
 
     return data;
-  }, [foods, search, category, status, sortBy]);
+  }, [foods, search, category, status]);
 
   const indexOfLastFood = currentPage * foodsPerPage;
   const indexOfFirstFood = indexOfLastFood - foodsPerPage;
@@ -217,10 +230,18 @@ const Home = () => {
               <FoodCard
                 key={food._id}
                 food={food}
+                userData={userData}
                 onDelete={() => handleDelete(food._id)}
+                setSelectedFood={setSelectedFood} // pass setter
               />
             ))}
           </div>
+
+          <UpdateFoodModal
+            food={selectedFood}
+            getMyFoods={getMyFoods}
+            setSelectedFood={setSelectedFood}
+          />
 
           {/* Pagination */}
           <div className="flex justify-center mt-12">

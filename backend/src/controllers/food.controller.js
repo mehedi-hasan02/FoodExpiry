@@ -1,6 +1,7 @@
 import {
   deleteFoodService,
   getAllFoodService,
+  getFamilyFoodService,
   getFoodByIdService,
   getMyFoodService,
   insertFood,
@@ -73,6 +74,16 @@ export const getMyFoodController = async (req, res, next) => {
       success: true,
       foods,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFamilyFoodController = async (req, res, next) => {
+  try {
+    const familyFoods = await getFamilyFoodService(req.user.id);
+
+    res.status(200).json({ familyFoods });
   } catch (error) {
     next(error);
   }

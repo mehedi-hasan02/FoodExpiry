@@ -1,17 +1,14 @@
-import { Link } from "react-router-dom";
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
   FaBoxes,
   FaEdit,
   FaTrash,
-  FaEye,
 } from "react-icons/fa";
+import default_food from "../../assets/default_food.png";
 
 const FoodCard = ({ food, userData, onDelete, setSelectedFood }) => {
-  // const [selectedFood, setSelectedFood] = useState(null);
-  const isOwner =
-    food.user?._id === userData?._id || food.user === userData?._id;
+  const isOwner = food?.user === userData?._id;
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -40,9 +37,9 @@ const FoodCard = ({ food, userData, onDelete, setSelectedFood }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-green-100">
       {/* Food Image */}
-      <figure className="h-52 overflow-hidden">
+      <figure className="h-52 bg-gray-100 flex items-center justify-center overflow-hidden">
         <img
-          src={food.image || "/food-placeholder.png"}
+          src={food.image || default_food}
           alt={food.name}
           className="w-full h-full object-cover hover:scale-105 transition duration-300"
         />
@@ -91,42 +88,36 @@ const FoodCard = ({ food, userData, onDelete, setSelectedFood }) => {
 
         {/* Buttons */}
         <div className="mt-6 space-y-3">
-          <Link
+          {/* <Link
             to={`/food/${food._id}`}
             className="btn btn-success w-full text-white"
           >
             <FaEye />
             Details
-          </Link>
+          </Link> */}
 
-          {isOwner && (
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => {
-                  setSelectedFood(food);
-                  document.getElementById("update_food_modal").showModal();
-                }}
-                className="btn btn-info text-white"
-              >
-                <FaEdit />
-                Edit
-              </button>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => {
+                setSelectedFood(food);
+                document.getElementById("update_food_modal").showModal();
+              }}
+              disabled={!isOwner}
+              className="btn btn-info text-white"
+            >
+              <FaEdit />
+              Edit
+            </button>
 
-              {/* <UpdateFoodModal
-                food={selectedFood}
-                getMyFoods={getMyFoods}
-                setSelectedFood={setSelectedFood}
-              /> */}
-
-              <button
-                onClick={() => onDelete(food._id)}
-                className="btn btn-error text-white"
-              >
-                <FaTrash />
-                Delete
-              </button>
-            </div>
-          )}
+            <button
+              onClick={() => onDelete(food._id)}
+              disabled={!isOwner}
+              className="btn btn-error text-white"
+            >
+              <FaTrash />
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

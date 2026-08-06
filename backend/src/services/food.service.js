@@ -1,4 +1,5 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
+import Family from "../models/family.model.js";
 import Food from "../models/food.model.js";
 
 export const insertFood = async (data) => {
@@ -63,6 +64,30 @@ export const getMyFoodService = async (id) => {
   // console.log(foods);
 
   return foods;
+};
+
+export const getFamilyFoodService = async (id) => {
+  const familyMembers = await Family.findOne({
+    $or: [{ owner: id }, { "members.user": id }],
+  });
+
+  if (!familyMembers) {
+    return [];
+  }
+
+  // owner + members
+  const usersId = [
+    familyMembers.owner,
+    ...familyMembers.members.map((member) => member.user),
+  ];
+
+  const uniqueUserId = [...new Set(usersId.map((id) => id.toString()))];
+
+  const familyFoods = await Food.find({
+    user: { $in: uniqueUserId },
+  });
+
+  return familyFoods;
 };
 
 export const getFoodByIdService = async (id) => {

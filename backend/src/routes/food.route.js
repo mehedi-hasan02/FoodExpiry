@@ -3,6 +3,7 @@ import {
   addFood,
   deleteFoodController,
   getAllFoodController,
+  getFamilyFoodController,
   getFoodByIdController,
   getMyFoodController,
   searchFoodController,
@@ -28,6 +29,7 @@ foodRoute.post(
 
 foodRoute.get("/food", getAllFoodController);
 foodRoute.get("/myfoods", authMiddleWare, getMyFoodController);
+foodRoute.get("/food/family", authMiddleWare, getFamilyFoodController);
 foodRoute.get("/food/search", authMiddleWare, searchFoodController);
 foodRoute.get("/food/:id", authMiddleWare, getFoodByIdController);
 

@@ -1,6 +1,6 @@
 import app from "../src/app.js";
 import connectDB from "../src/config/db.js";
 
-connectDB();
+await connectDB();
 
 export default app;

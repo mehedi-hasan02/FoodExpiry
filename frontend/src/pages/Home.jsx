@@ -8,6 +8,7 @@ import FoodCard from "../components/food/FoodCard";
 import { Link } from "react-router-dom";
 import UpdateFoodModal from "../components/food/UpdateFoodModal";
 import Swal from "sweetalert2";
+import default_food from "../assets/default_food.png";
 
 const Home = () => {
   const { server_url, userData } = useContext(AuthContext);
@@ -34,11 +35,10 @@ const Home = () => {
         withCredentials: true,
       });
 
-      setFoods(data.familyFoods || []);
-
-      // console.log(data.familyFoods);
+      setFoods(data.familyFoods.familyFoods || []);
     } catch (error) {
       console.log(error.response?.data || error.message);
+      toast.error(error.response?.data?.message || "Failed to load foods");
     } finally {
       setLoading(false);
     }
@@ -47,6 +47,8 @@ const Home = () => {
   useEffect(() => {
     getMyFoods();
   }, []);
+
+  // console.log(foods);
 
   const handleDelete = async (id) => {
     try {
@@ -199,19 +201,6 @@ const Home = () => {
           <option>Expiring Soon</option>
           <option>Expired</option>
         </select>
-
-        {/* Sort */}
-
-        {/* <select
-          className="select select-bordered rounded-xl w-full"
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-        >
-          <option>Newest</option>
-          <option>Oldest</option>
-          <option>Expiry</option>
-          <option>A-Z</option>
-        </select> */}
       </div>
       {/* Food Grid */}
       {loading ? (
@@ -279,11 +268,7 @@ const Home = () => {
       ) : (
         /* Empty State */
         <div className="bg-white rounded-2xl shadow-lg p-12 text-center border border-gray-100">
-          <img
-            src="/food-placeholder.png"
-            alt="No Food"
-            className="w-52 mx-auto mb-6"
-          />
+          <img src={default_food} alt="No Food" className="w-52 mx-auto mb-6" />
 
           <h2 className="text-2xl font-bold text-gray-700">No Food Found</h2>
 

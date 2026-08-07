@@ -15,6 +15,30 @@ export const validateAddFood = (req, res, next) => {
     });
   }
 
+  if (isNaN(new Date(expiryDate).getTime())) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid expiry date",
+    });
+  }
+
+  const expiry = new Date(expiryDate);
+  const today = new Date();
+
+  today.setHours(0, 0, 0, 0);
+  expiry.setHours(0, 0, 0, 0);
+
+  const dateDifferent = expiry - today;
+
+  console.log(dateDifferent);
+
+  if (dateDifferent < 0) {
+    return res.status(400).json({
+      seccess: false,
+      message: "Expiry date must be today or in the future",
+    });
+  }
+
   next();
 };
 
@@ -23,6 +47,33 @@ export const validateUpdateFood = (req, res, next) => {
     return res.status(400).json({
       message: "No data provided for update",
     });
+  }
+  const { expiryDate } = req.body;
+
+  // Validate expiryDate only if it is being updated
+  if (expiryDate !== undefined) {
+    const expiry = new Date(expiryDate);
+
+    // Check invalid date
+    if (isNaN(expiry.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid expiry date",
+      });
+    }
+
+    const today = new Date();
+
+    // Compare only dates, not time
+    today.setHours(0, 0, 0, 0);
+    expiry.setHours(0, 0, 0, 0);
+
+    if (expiry < today) {
+      return res.status(400).json({
+        success: false,
+        message: "Expiry date must be today or in the future",
+      });
+    }
   }
 
   next();

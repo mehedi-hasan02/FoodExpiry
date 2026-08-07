@@ -83,6 +83,8 @@ export const getFamilyFoodController = async (req, res, next) => {
   try {
     const familyFoods = await getFamilyFoodService(req.user.id);
 
+    // console.log(familyFoods);
+
     res.status(200).json({ familyFoods });
   } catch (error) {
     next(error);

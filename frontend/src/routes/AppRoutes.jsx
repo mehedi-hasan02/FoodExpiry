@@ -8,6 +8,7 @@ import MainLayout from "../components/layout/MainLayout";
 import AddFood from "../pages/food/AddFood";
 import MyFood from "../pages/food/MyFood";
 import Family from "../pages/family/Family";
+import Dashboard from "../components/dashboard/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -38,8 +39,9 @@ const AppRoutes = () => {
           </PrivateRoutes>
         }
       >
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/my-foods" element={<MyFood />} />
+        <Route path="/family-foods" element={<Home />} />
         <Route path="/add-food" element={<AddFood />} />
         <Route path="/family-member" element={<Family />} />
       </Route>

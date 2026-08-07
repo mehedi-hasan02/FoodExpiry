@@ -81,7 +81,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
         setSelectedFood(null);
       }
     } catch (error) {
-      toast.error(error.response?.data.error || error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 

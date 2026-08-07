@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import UpdateFoodModal from "../../components/food/UpdateFoodModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import default_food from "../../assets/default_food.png";
 
 const MyFood = () => {
   // Replace with API data later
@@ -170,10 +171,10 @@ const MyFood = () => {
       </div>
 
       {/* Food Grid */}
-      {currentFoods.length ? (
+      {currentFoods?.length ? (
         <>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8">
-            {currentFoods.map((food) => (
+            {currentFoods?.map((food) => (
               <FoodCard
                 key={food._id}
                 food={food}
@@ -226,11 +227,7 @@ const MyFood = () => {
         </>
       ) : (
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center mt-8">
-          <img
-            src="/food-placeholder.png"
-            alt="No Food"
-            className="w-52 mx-auto"
-          />
+          <img src={default_food} alt="No Food" className="w-52 mx-auto" />
 
           <h2 className="text-3xl font-bold text-gray-700 mt-6">
             No Foods Added Yet

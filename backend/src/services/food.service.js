@@ -70,27 +70,58 @@ export const getMyFoodService = async (id) => {
 };
 
 export const getFamilyFoodService = async (id) => {
-  const familyMembers = await Family.findOne({
+  const family = await Family.findOne({
     $or: [{ owner: id }, { "members.user": id }],
-  });
+  })
+    .populate("owner", "name email profileImage")
+    .populate("members.user", "name email profileImage")
+    .lean();
 
-  if (!familyMembers) {
-    return [];
+  if (!family) {
+    return {
+      familyFoods: [],
+      familyMembers: [],
+    };
   }
 
-  // owner + members
-  const usersId = [
-    familyMembers.owner,
-    ...familyMembers.members.map((member) => member.user),
+  // Owner
+  const owner = {
+    _id: family.owner._id,
+    name: family.owner.name,
+    email: family.owner.email,
+    profileImage: family.owner.profileImage,
+    role: "Owner",
+  };
+
+  // Members
+  const members = family.members.map((member) => ({
+    _id: member.user._id,
+    name: member.user.name,
+    email: member.user.email,
+    profileImage: member.user.profileImage,
+    role: member.role,
+    joinedAt: member.joinedAt,
+  }));
+
+  // All family user IDs
+  const userIds = [
+    family.owner._id,
+    ...family.members.map((member) => member.user._id),
   ];
 
-  const uniqueUserId = [...new Set(usersId.map((id) => id.toString()))];
+  const uniqueUserIds = [...new Set(userIds.map((id) => id.toString()))];
 
+  // Get all family foods
   const familyFoods = await Food.find({
-    user: { $in: uniqueUserId },
-  });
+    user: { $in: uniqueUserIds },
+  }).lean();
 
-  return familyFoods;
+  // console.log(family);
+
+  return {
+    familyFoods,
+    familyMembers: [[family.familyName], [...members]],
+  };
 };
 
 export const getFoodByIdService = async (id) => {

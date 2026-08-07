@@ -33,7 +33,13 @@ foodRoute.get("/food/family", authMiddleWare, getFamilyFoodController);
 foodRoute.get("/food/search", authMiddleWare, searchFoodController);
 foodRoute.get("/food/:id", authMiddleWare, getFoodByIdController);
 
-foodRoute.put("/food/:id", upload.single("image"), authMiddleWare, updateFood);
+foodRoute.put(
+  "/food/:id",
+  upload.single("image"),
+  authMiddleWare,
+  validateUpdateFood,
+  updateFood,
+);
 
 foodRoute.delete(
   "/food/:id",

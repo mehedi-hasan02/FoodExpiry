@@ -1,11 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "../shared/Navbar";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <>
-      <Navbar />
-      <main className="min-h-screen">
+      <Navbar expanded={expanded} setExpanded={setExpanded} />
+      <main
+        className={`min-h-screen transition-all duration-300 ${
+          expanded ? "ml-64" : "ml-16"
+        }`}
+      >
         <Outlet />
       </main>
     </>

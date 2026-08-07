@@ -4,8 +4,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import authRoute from "./routes/auth.route.js";
-import foodRoute from "./routes/food.route.js";
 import userRoute from "./routes/user.route.js";
+import foodRoute from "./routes/food.route.js";
 import familyRoute from "./routes/family.route.js";
 import errorHandler from "./middleware/error.middleware.js";
 
@@ -35,8 +35,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/", authRoute);
-app.use("/", foodRoute);
 app.use("/", userRoute);
+app.use("/", foodRoute);
 app.use("/", familyRoute);
 
 // Root

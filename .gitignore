@@ -8,3 +8,5 @@ frontend/.vercel/
 backend/.env
 backend/node_modules/
 backend/.vercel/
+.vercel
+.env*

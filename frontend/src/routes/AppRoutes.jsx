@@ -8,7 +8,8 @@ import MainLayout from "../components/layout/MainLayout";
 import AddFood from "../pages/food/AddFood";
 import MyFood from "../pages/food/MyFood";
 import Family from "../pages/family/Family";
-import Dashboard from "../components/dashboard/Dashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
+// import Dashboard from "../components/dashboard/Dashboard";
 
 const AppRoutes = () => {
   return (

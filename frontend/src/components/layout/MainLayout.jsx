@@ -9,7 +9,7 @@ const MainLayout = () => {
     <>
       <Navbar expanded={expanded} setExpanded={setExpanded} />
       <main
-        className={`min-h-screen transition-all duration-300 ${
+        className={`min-h-screen bg-gray-50 transition-all duration-300 ${
           expanded ? "ml-64" : "ml-16"
         }`}
       >

@@ -38,23 +38,36 @@ const FamilyCard = ({ member, owner, getFamilyMembers }) => {
     }
   };
 
-  // console.log(member);
-
   return (
-    <div className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-green-300 hover:shadow-lg">
+    <div
+      className="group rounded-2xl p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      style={{
+        backgroundColor: "#ffffff",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "#e5e7eb",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#86efac")}
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#e5e7eb")}
+    >
       <div className="flex items-center gap-4">
         {/* Avatar */}
         <div className="relative">
           <img
             src={member.profileImage || defaultImage}
             alt={member.name}
-            className="h-16 w-16 rounded-full object-cover ring-2 ring-green-100"
+            className="h-16 w-16 rounded-full object-cover"
+            style={{
+              boxShadow: "0 0 0 2px #dcfce7",
+            }}
           />
 
           <span
-            className={`absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-white shadow ${
-              member.role === "Owner" ? "bg-amber-500" : "bg-emerald-500"
-            }`}
+            className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full shadow"
+            style={{
+              backgroundColor: member.role === "Owner" ? "#f59e0b" : "#10b981",
+              color: "#ffffff",
+            }}
           >
             {member.role === "Owner" ? (
               <FaCrown className="text-xs" />
@@ -66,13 +79,18 @@ const FamilyCard = ({ member, owner, getFamilyMembers }) => {
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h2 className="truncate text-lg font-semibold text-gray-800">
+          <h2
+            className="truncate text-lg font-semibold"
+            style={{ color: "#1f2937" }}
+          >
             {member.name}
           </h2>
 
-          <p className="truncate text-sm text-gray-500">{member.email}</p>
+          <p className="truncate text-sm" style={{ color: "#6b7280" }}>
+            {member.email}
+          </p>
 
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs" style={{ color: "#9ca3af" }}>
             Joined {new Date(member.joinedAt).toLocaleDateString()}
           </p>
         </div>
@@ -81,7 +99,8 @@ const FamilyCard = ({ member, owner, getFamilyMembers }) => {
       {owner && member.role !== "Owner" && (
         <button
           onClick={() => handelRemoveMember(member._id)}
-          className="btn btn-error btn-soft btn-sm mt-4 w-full"
+          className="btn btn-sm mt-4 w-full border-none hover:bg-[#fecaca]"
+          style={{ backgroundColor: "#fee2e2", color: "#dc2626" }}
         >
           <FaTrash className="text-xs" />
           Remove

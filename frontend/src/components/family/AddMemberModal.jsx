@@ -43,30 +43,47 @@ const AddMemberModal = ({ open, onClose, familyName, getFamilyMembers }) => {
   // console.log(userData._id);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl w-full max-w-md p-6 relative">
+      <div
+        className="rounded-xl w-full max-w-md p-6 relative"
+        style={{ backgroundColor: "#ffffff", color: "#1f2937" }}
+      >
         <button
           onClick={onClose}
           className="absolute right-4 top-4 btn btn-sm btn-circle btn-ghost"
+          style={{ color: "#6b7280" }}
         >
           <FaTimes />
         </button>
 
-        <h2 className="text-2xl font-bold mb-1">Add Family Member</h2>
+        <h2 className="text-2xl font-bold mb-1 text-green-600">
+          Add Family Member
+        </h2>
 
-        <p className="text-gray-500 mb-6">
-          Family: <span className="font-semibold">{familyName}</span>
+        <p className="mb-6" style={{ color: "#6b7280" }}>
+          Family:{" "}
+          <span className="font-semibold" style={{ color: "#1f2937" }}>
+            {familyName}
+          </span>
         </p>
 
         <form onSubmit={onSubmit} className="space-y-5">
           <div>
             <label className="label">
-              <span className="label-text">Member Email</span>
+              <span className="label-text" style={{ color: "#1f2937" }}>
+                Member Email
+              </span>
             </label>
 
             <input
               type="email"
               placeholder="Enter member email"
               className="input input-bordered w-full"
+              style={{
+                colorScheme: "light",
+                backgroundColor: "#ffffff",
+                color: "#1f2937",
+                borderColor: "#d1d5db",
+              }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -76,7 +93,8 @@ const AddMemberModal = ({ open, onClose, familyName, getFamilyMembers }) => {
           <button
             type="submit"
             disabled={loading}
-            className="btn bg-green-500 hover:bg-green-600 text-white w-full"
+            className="btn border-none w-full hover:bg-[#16a34a]"
+            style={{ backgroundColor: "#22c55e", color: "#ffffff" }}
           >
             <FaUserPlus />
             Add Member

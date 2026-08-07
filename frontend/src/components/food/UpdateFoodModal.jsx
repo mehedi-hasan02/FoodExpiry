@@ -86,33 +86,60 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
   };
 
   return (
-    <dialog id="update_food_modal" className="modal">
-      <div className="modal-box max-w-4xl rounded-2xl">
-        <h3 className="text-2xl font-bold mb-6 text-green-600">Update Food</h3>
+    <dialog
+      id="update_food_modal"
+      className="modal"
+      style={{ colorScheme: "light" }}
+    >
+      <div
+        className="modal-box max-w-4xl rounded-2xl"
+        style={{
+          colorScheme: "light",
+          backgroundColor: "#ffffff",
+          color: "#1f2937",
+        }}
+      >
+        <h3 className="text-2xl font-bold mb-6" style={{ color: "#16a34a" }}>
+          Update Food
+        </h3>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Food Name */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">Food Name</span>
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
+                  Food Name
+                </span>
               </label>
 
-              <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-                <FaAppleAlt className="text-green-500" />
+              <label
+                className="input input-bordered rounded-xl flex items-center gap-3 w-full"
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#d1d5db",
+                }}
+              >
+                <FaAppleAlt style={{ color: "#22c55e" }} />
                 <input
-                  // value={food.name}
                   type="text"
                   placeholder="Milk"
                   className="grow"
-                  {...register("name", {
-                    required: "Food name is required",
-                  })}
+                  style={{
+                    colorScheme: "light",
+                    backgroundColor: "transparent",
+                    color: "#1f2937",
+                  }}
+                  {...register("name", { required: "Food name is required" })}
                 />
               </label>
 
               {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-sm mt-1" style={{ color: "#ef4444" }}>
                   {errors.name.message}
                 </p>
               )}
@@ -121,14 +148,23 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
             {/* Category */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">Category</span>
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
+                  Category
+                </span>
               </label>
 
               <select
                 className="select select-bordered rounded-xl w-full"
-                {...register("category", {
-                  required: "Category is required",
-                })}
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  color: "#1f2937",
+                  borderColor: "#d1d5db",
+                }}
+                {...register("category", { required: "Category is required" })}
               >
                 <option value="">Select Category</option>
                 <option value="Fruits">Fruits</option>
@@ -144,7 +180,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               </select>
 
               {errors.category && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-sm mt-1" style={{ color: "#ef4444" }}>
                   {errors.category.message}
                 </p>
               )}
@@ -153,16 +189,33 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
             {/* Quantity */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">Quantity</span>
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
+                  Quantity
+                </span>
               </label>
 
-              <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-                <FaBoxes className="text-green-500" />
+              <label
+                className="input input-bordered rounded-xl flex items-center gap-3 w-full"
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#d1d5db",
+                }}
+              >
+                <FaBoxes style={{ color: "#22c55e" }} />
                 <input
                   type="number"
                   min="1"
                   placeholder="1"
                   className="grow"
+                  style={{
+                    colorScheme: "light",
+                    backgroundColor: "transparent",
+                    color: "#1f2937",
+                  }}
                   {...register("quantity", {
                     required: "Quantity is required",
                   })}
@@ -170,7 +223,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               </label>
 
               {errors.quantity && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-sm mt-1" style={{ color: "#ef4444" }}>
                   {errors.quantity.message}
                 </p>
               )}
@@ -179,14 +232,23 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
             {/* Unit */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">Unit</span>
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
+                  Unit
+                </span>
               </label>
 
               <select
                 className="select select-bordered rounded-xl w-full"
-                {...register("unit", {
-                  required: "Unit is required",
-                })}
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  color: "#1f2937",
+                  borderColor: "#d1d5db",
+                }}
+                {...register("unit", { required: "Unit is required" })}
               >
                 <option value="">Select Unit</option>
                 <option value="kg">kg</option>
@@ -199,7 +261,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               </select>
 
               {errors.unit && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-sm mt-1" style={{ color: "#ef4444" }}>
                   {errors.unit.message}
                 </p>
               )}
@@ -208,14 +270,31 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
             {/* Expiry Date */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">Expiry Date</span>
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
+                  Expiry Date
+                </span>
               </label>
 
-              <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-                <FaCalendarAlt className="text-green-500" />
+              <label
+                className="input input-bordered rounded-xl flex items-center gap-3 w-full"
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#d1d5db",
+                }}
+              >
+                <FaCalendarAlt style={{ color: "#22c55e" }} />
                 <input
                   type="date"
                   className="grow"
+                  style={{
+                    colorScheme: "light",
+                    backgroundColor: "transparent",
+                    color: "#1f2937",
+                  }}
                   {...register("expiryDate", {
                     required: "Expiry date is required",
                   })}
@@ -223,7 +302,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               </label>
 
               {errors.expiryDate && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-sm mt-1" style={{ color: "#ef4444" }}>
                   {errors.expiryDate.message}
                 </p>
               )}
@@ -232,13 +311,22 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
             {/* Storage Location */}
             <div>
               <label className="label">
-                <span className="label-text font-semibold">
+                <span
+                  className="label-text font-semibold"
+                  style={{ color: "#1f2937" }}
+                >
                   Storage Location
                 </span>
               </label>
 
               <select
                 className="select select-bordered rounded-xl w-full"
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "#ffffff",
+                  color: "#1f2937",
+                  borderColor: "#d1d5db",
+                }}
                 {...register("location")}
               >
                 <option value="Fridge">Fridge</option>
@@ -253,14 +341,31 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
           {/* Notes */}
           <div>
             <label className="label">
-              <span className="label-text font-semibold">Notes</span>
+              <span
+                className="label-text font-semibold"
+                style={{ color: "#1f2937" }}
+              >
+                Notes
+              </span>
             </label>
 
-            <label className="textarea textarea-bordered rounded-xl flex gap-3 w-full">
-              <FaStickyNote className="text-green-500 mt-1" />
+            <label
+              className="textarea textarea-bordered rounded-xl flex gap-3 w-full"
+              style={{
+                colorScheme: "light",
+                backgroundColor: "#ffffff",
+                borderColor: "#d1d5db",
+              }}
+            >
+              <FaStickyNote className="mt-1" style={{ color: "#22c55e" }} />
               <textarea
                 rows="4"
                 className="grow outline-none resize-none"
+                style={{
+                  colorScheme: "light",
+                  backgroundColor: "transparent",
+                  color: "#1f2937",
+                }}
                 placeholder="Any additional notes..."
                 {...register("notes")}
               />
@@ -270,7 +375,12 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
           {/* Food Image */}
           <div>
             <label className="label">
-              <span className="label-text font-semibold">Food Image</span>
+              <span
+                className="label-text font-semibold"
+                style={{ color: "#1f2937" }}
+              >
+                Food Image
+              </span>
             </label>
 
             <input
@@ -278,6 +388,12 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
               type="file"
               accept="image/*"
               className="file-input file-input-bordered w-full"
+              style={{
+                colorScheme: "light",
+                backgroundColor: "#ffffff",
+                color: "#1f2937",
+                borderColor: "#d1d5db",
+              }}
               ref={imageRef}
               {...imageRegister}
               onChange={(e) => {
@@ -291,13 +407,18 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                 <img
                   src={preview}
                   alt="Food Preview"
-                  className="w-40 h-40 rounded-xl object-cover border border-green-200 shadow"
+                  className="w-40 h-40 rounded-xl object-cover shadow"
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "#bbf7d0",
+                    borderStyle: "solid",
+                  }}
                 />
               </div>
             )}
 
             {errors.image && (
-              <p className="text-red-500 text-sm mt-2">
+              <p className="text-sm mt-2" style={{ color: "#ef4444" }}>
                 {errors.image.message}
               </p>
             )}
@@ -305,7 +426,8 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
 
           <button
             type="submit"
-            className="btn w-full bg-green-500 hover:bg-green-600 border-none text-white text-lg"
+            className="btn w-full border-none text-lg"
+            style={{ backgroundColor: "#22c55e", color: "#ffffff" }}
           >
             Update Food
           </button>

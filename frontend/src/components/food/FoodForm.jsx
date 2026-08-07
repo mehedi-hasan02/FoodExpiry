@@ -67,26 +67,28 @@ const FoodForm = () => {
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-3xl border border-green-100 p-8">
+    <div
+      className="bg-white shadow-xl rounded-3xl border border-gray-200 p-8"
+      style={{ colorScheme: "light" }}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Food Name */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Food Name</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Food Name
             </label>
 
-            <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-              <FaAppleAlt className="text-green-500" />
+            <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <FaAppleAlt className="text-green-500 shrink-0" />
               <input
                 type="text"
                 placeholder="Milk"
-                className="grow"
-                {...register("name", {
-                  required: "Food name is required",
-                })}
+                className="grow bg-transparent text-gray-800 placeholder-gray-400 outline-none"
+                style={{ colorScheme: "light" }}
+                {...register("name", { required: "Food name is required" })}
               />
-            </label>
+            </div>
 
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -95,28 +97,29 @@ const FoodForm = () => {
 
           {/* Category */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Category</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Category
             </label>
 
-            <select
-              className="select select-bordered rounded-xl w-full"
-              {...register("category", {
-                required: "Category is required",
-              })}
-            >
-              <option value="">Select Category</option>
-              <option value="Fruits">Fruits</option>
-              <option value="Vegetables">Vegetables</option>
-              <option value="Dairy">Dairy</option>
-              <option value="Meat">Meat</option>
-              <option value="Seafood">Seafood</option>
-              <option value="Bakery">Bakery</option>
-              <option value="Beverages">Beverages</option>
-              <option value="Frozen">Frozen</option>
-              <option value="Snacks">Snacks</option>
-              <option value="Other">Other</option>
-            </select>
+            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <select
+                className="grow bg-transparent text-gray-800 outline-none cursor-pointer"
+                style={{ colorScheme: "light" }}
+                {...register("category", { required: "Category is required" })}
+              >
+                <option value="">Select Category</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Meat">Meat</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Frozen">Frozen</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
 
             {errors.category && (
               <p className="text-red-500 text-sm mt-1">
@@ -127,22 +130,21 @@ const FoodForm = () => {
 
           {/* Quantity */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Quantity</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Quantity
             </label>
 
-            <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-              <FaBoxes className="text-green-500" />
+            <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <FaBoxes className="text-green-500 shrink-0" />
               <input
                 type="number"
                 min="1"
                 placeholder="1"
-                className="grow"
-                {...register("quantity", {
-                  required: "Quantity is required",
-                })}
+                className="grow bg-transparent text-gray-800 placeholder-gray-400 outline-none"
+                style={{ colorScheme: "light" }}
+                {...register("quantity", { required: "Quantity is required" })}
               />
-            </label>
+            </div>
 
             {errors.quantity && (
               <p className="text-red-500 text-sm mt-1">
@@ -153,25 +155,26 @@ const FoodForm = () => {
 
           {/* Unit */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Unit</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Unit
             </label>
 
-            <select
-              className="select select-bordered rounded-xl w-full"
-              {...register("unit", {
-                required: "Unit is required",
-              })}
-            >
-              <option value="">Select Unit</option>
-              <option value="kg">kg</option>
-              <option value="g">g</option>
-              <option value="L">L</option>
-              <option value="ml">ml</option>
-              <option value="pcs">pcs</option>
-              <option value="pack">pack</option>
-              <option value="box">box</option>
-            </select>
+            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <select
+                className="grow bg-transparent text-gray-800 outline-none cursor-pointer"
+                style={{ colorScheme: "light" }}
+                {...register("unit", { required: "Unit is required" })}
+              >
+                <option value="">Select Unit</option>
+                <option value="kg">kg</option>
+                <option value="g">g</option>
+                <option value="L">L</option>
+                <option value="ml">ml</option>
+                <option value="pcs">pcs</option>
+                <option value="pack">pack</option>
+                <option value="box">box</option>
+              </select>
+            </div>
 
             {errors.unit && (
               <p className="text-red-500 text-sm mt-1">{errors.unit.message}</p>
@@ -180,20 +183,21 @@ const FoodForm = () => {
 
           {/* Expiry Date */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Expiry Date</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Expiry Date
             </label>
 
-            <label className="input input-bordered rounded-xl flex items-center gap-3 w-full">
-              <FaCalendarAlt className="text-green-500" />
+            <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <FaCalendarAlt className="text-green-500 shrink-0" />
               <input
                 type="date"
-                className="grow"
+                className="grow bg-transparent text-gray-800 outline-none"
+                style={{ colorScheme: "light" }}
                 {...register("expiryDate", {
                   required: "Expiry date is required",
                 })}
               />
-            </label>
+            </div>
 
             {errors.expiryDate && (
               <p className="text-red-500 text-sm mt-1">
@@ -204,51 +208,56 @@ const FoodForm = () => {
 
           {/* Storage Location */}
           <div>
-            <label className="label">
-              <span className="label-text font-semibold">Storage Location</span>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Storage Location
             </label>
 
-            <select
-              className="select select-bordered rounded-xl w-full"
-              {...register("location")}
-            >
-              <option value="Fridge">Fridge</option>
-              <option value="Freezer">Freezer</option>
-              <option value="Pantry">Pantry</option>
-              <option value="Kitchen">Kitchen</option>
-              <option value="Other">Other</option>
-            </select>
+            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+              <select
+                className="grow bg-transparent text-gray-800 outline-none cursor-pointer"
+                style={{ colorScheme: "light" }}
+                {...register("location")}
+              >
+                <option value="Fridge">Fridge</option>
+                <option value="Freezer">Freezer</option>
+                <option value="Pantry">Pantry</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Notes */}
         <div>
-          <label className="label">
-            <span className="label-text font-semibold">Notes</span>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Notes
           </label>
 
-          <label className="textarea textarea-bordered rounded-xl flex gap-3 w-full">
-            <FaStickyNote className="text-green-500 mt-1" />
+          <div className="flex gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+            <FaStickyNote className="text-green-500 mt-1 shrink-0" />
             <textarea
               rows="4"
-              className="grow outline-none resize-none"
+              className="grow bg-transparent text-gray-800 placeholder-gray-400 outline-none resize-none"
+              style={{ colorScheme: "light" }}
               placeholder="Any additional notes..."
               {...register("notes")}
             />
-          </label>
+          </div>
         </div>
 
         {/* Food Image */}
         <div>
-          <label className="label">
-            <span className="label-text font-semibold">Food Image</span>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Food Image
           </label>
 
           <input
             id="foodImage"
             type="file"
             accept="image/*"
-            className="file-input file-input-bordered w-full"
+            className="block w-full text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-xl cursor-pointer file:mr-4 file:py-2.5 file:px-4 file:rounded-l-xl file:border-0 file:bg-green-500 file:text-white file:font-medium hover:file:bg-green-600 file:cursor-pointer"
+            style={{ colorScheme: "light" }}
             ref={imageRef}
             {...imageRegister}
             onChange={(e) => {
@@ -262,7 +271,7 @@ const FoodForm = () => {
               <img
                 src={preview}
                 alt="Food Preview"
-                className="w-40 h-40 rounded-xl object-cover border border-green-200 shadow"
+                className="w-40 h-40 rounded-xl object-cover border border-gray-200 shadow"
               />
             </div>
           )}
@@ -274,7 +283,7 @@ const FoodForm = () => {
 
         <button
           type="submit"
-          className="btn w-full bg-green-500 hover:bg-green-600 border-none text-white text-lg"
+          className="w-full h-12 rounded-xl font-medium bg-green-500 hover:bg-green-600 text-white text-lg transition-colors"
         >
           Add Food
         </button>

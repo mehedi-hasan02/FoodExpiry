@@ -8,9 +8,10 @@ import UpdateFoodModal from "../../components/food/UpdateFoodModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import default_food from "../../assets/default_food.png";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const MyFood = () => {
-  // Replace with API data later
+  useDocumentTitle("MyFoods");
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedFood, setSelectedFood] = useState(null);
@@ -101,18 +102,20 @@ const MyFood = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-5 py-10">
+    <div
+      className="max-w-7xl mx-auto px-5 py-10"
+      style={{ colorScheme: "light" }} // stops native <input>/<select> from rendering OS dark chrome
+    >
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-bold text-gray-800">My Foods</h1>
-
+          <h1 className="text-4xl font-bold text-green-600">My Foods</h1>
           <p className="text-gray-500 mt-2">Manage all foods you've added.</p>
         </div>
 
         <Link
           to="/add-food"
-          className="btn bg-green-500 hover:bg-green-600 text-white border-none"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-green-500 hover:bg-green-600 text-white transition-colors"
         >
           <FaPlus />
           Add Food
@@ -120,29 +123,29 @@ const MyFood = () => {
       </div>
 
       {/* Search & Filters */}
-      <div className="bg-white rounded-2xl shadow-lg p-5 mt-8 border border-gray-100">
+      <div className="bg-white rounded-2xl shadow-sm p-5 mt-8 border border-gray-200">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
-          <label className="input input-bordered flex items-center gap-3 rounded-xl w-full">
-            <FaSearch className="text-green-500" />
-
+          <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+            <FaSearch className="text-green-500 shrink-0" />
             <input
               type="text"
-              className="grow"
+              className="grow bg-transparent text-gray-800 placeholder-gray-400 outline-none"
               placeholder="Search food..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              style={{ colorScheme: "light" }}
             />
-          </label>
+          </div>
 
           {/* Category */}
-          <label className="select select-bordered rounded-xl flex items-center gap-2 w-full">
-            <FaFilter className="text-green-500" />
-
+          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+            <FaFilter className="text-green-500 shrink-0" />
             <select
-              className="grow bg-transparent outline-none"
+              className="grow bg-transparent text-gray-800 outline-none cursor-pointer"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              style={{ colorScheme: "light" }}
             >
               <option value="">All Categories</option>
               <option>Fruits</option>
@@ -156,17 +159,22 @@ const MyFood = () => {
               <option>Snacks</option>
               <option>Other</option>
             </select>
-          </label>
+          </div>
 
           {/* Status */}
-          <label className="select select-bordered rounded-xl w-full">
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 h-12 focus-within:bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition-colors">
+            <select
+              className="grow bg-transparent text-gray-800 outline-none cursor-pointer"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              style={{ colorScheme: "light" }}
+            >
               <option value="">All Status</option>
               <option>Fresh</option>
               <option>Expiring Soon</option>
               <option>Expired</option>
             </select>
-          </label>
+          </div>
         </div>
       </div>
 
@@ -181,7 +189,7 @@ const MyFood = () => {
                 userData={userData}
                 getMyFoods={getMyFoods}
                 onDelete={() => handleDelete(food._id)}
-                setSelectedFood={setSelectedFood} // pass setter
+                setSelectedFood={setSelectedFood}
               />
             ))}
 
@@ -194,9 +202,9 @@ const MyFood = () => {
 
           {/* Pagination */}
           <div className="flex justify-center mt-12">
-            <div className="join">
+            <div className="flex items-center bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
               <button
-                className="join-item btn"
+                className="px-4 h-11 text-sm font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors border-r border-gray-200"
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => prev - 1)}
               >
@@ -206,8 +214,10 @@ const MyFood = () => {
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index}
-                  className={`join-item btn ${
-                    currentPage === index + 1 ? "btn-success text-white" : ""
+                  className={`px-4 h-11 text-sm font-medium transition-colors border-r border-gray-200 last:border-r-0 ${
+                    currentPage === index + 1
+                      ? "bg-green-500 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
                   }`}
                   onClick={() => setCurrentPage(index + 1)}
                 >
@@ -216,7 +226,7 @@ const MyFood = () => {
               ))}
 
               <button
-                className="join-item btn"
+                className="px-4 h-11 text-sm font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((prev) => prev + 1)}
               >
@@ -226,7 +236,7 @@ const MyFood = () => {
           </div>
         </>
       ) : (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center mt-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center mt-8">
           <img src={default_food} alt="No Food" className="w-52 mx-auto" />
 
           <h2 className="text-3xl font-bold text-gray-700 mt-6">
@@ -239,7 +249,7 @@ const MyFood = () => {
 
           <Link
             to="/add-food"
-            className="btn bg-green-500 hover:bg-green-600 text-white border-none mt-6"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-green-500 hover:bg-green-600 text-white transition-colors mt-6"
           >
             <FaPlus />
             Add Food

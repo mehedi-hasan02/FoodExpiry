@@ -7,8 +7,10 @@ import axios from "axios";
 import AddMemberModal from "../../components/family/AddMemberModal";
 import CreateFamilyModal from "../../components/family/CreateFamily";
 import { toast } from "react-toastify";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Family = () => {
+  useDocumentTitle("Family Members");
   const { server_url, userData } = useContext(AuthContext);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
@@ -85,20 +87,31 @@ const Family = () => {
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">
       <div className="mb-10">
-        <h1 className="text-4xl font-bold text-green-600">Family Members</h1>
+        <h1 className="text-4xl font-bold" style={{ color: "#16a34a" }}>
+          Family Members
+        </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="mt-2" style={{ color: "#6b7280" }}>
           Invite your family members and manage your shared food inventory.
         </p>
       </div>
 
       {/* Invite */}
       {owner && (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-10">
+        <div
+          className="rounded-2xl shadow-lg p-6 mb-10"
+          style={{
+            backgroundColor: "#ffffff",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "#f3f4f6",
+          }}
+        >
           <div className="flex justify-center">
             <button
               onClick={() => setShowAddMemberModal(true)}
-              className="btn bg-green-500 hover:bg-green-600 text-white"
+              className="btn border-none hover:bg-[#16a34a]"
+              style={{ backgroundColor: "#22c55e", color: "#ffffff" }}
             >
               <FaUserPlus />
               Add Member
@@ -106,12 +119,22 @@ const Family = () => {
           </div>
         </div>
       )}
+
       {!owner && !hasFamily && (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-10">
+        <div
+          className="rounded-2xl shadow-lg p-6 mb-10"
+          style={{
+            backgroundColor: "#ffffff",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "#f3f4f6",
+          }}
+        >
           <div className="flex justify-center">
             <button
               onClick={() => setShowCreateFamilyModal(true)}
-              className="btn bg-green-500 hover:bg-green-600 text-white"
+              className="btn border-none hover:bg-[#16a34a]"
+              style={{ backgroundColor: "#22c55e", color: "#ffffff" }}
             >
               <FaUserPlus />
               Create Family

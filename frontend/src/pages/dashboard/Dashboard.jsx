@@ -14,8 +14,10 @@ import { calculateRemainingDays } from "../../utils/calculateRemainingDays";
 import default_food from "../../assets/default_food.png";
 import { MdOutlineGppGood } from "react-icons/md";
 import { Link } from "react-router-dom";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Dashboard = () => {
+  useDocumentTitle("Dashboard");
   const { server_url, userData } = useContext(AuthContext);
   const [allFoods, setAllFood] = useState([]);
   const [familyMembers, setFamilyMembers] = useState([]);
@@ -146,7 +148,7 @@ const Dashboard = () => {
 
           <Link
             to={"/add-food"}
-            className="btn bg-green-600 text-white hover:bg-green-700"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md font-medium bg-green-500 hover:bg-green-600 text-white transition-colors"
           >
             <FaPlusCircle />
             Add Food

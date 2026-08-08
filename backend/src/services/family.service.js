@@ -1,7 +1,9 @@
+import connectDB from "../config/dbConnect.js";
 import Family from "../models/family.model.js";
 import User from "../models/user.model.js";
 
 export const createFamilyService = async (data) => {
+  await connectDB();
   const { familyName, owner, familyImage } = data;
 
   //   console.log(owner);
@@ -34,6 +36,7 @@ export const createFamilyService = async (data) => {
 };
 
 export const addFamilyMemberService = async (data, ownerId) => {
+  await connectDB();
   const { email } = data;
   const user = await User.findOne({ email }).select("-password");
 
@@ -78,6 +81,7 @@ export const addFamilyMemberService = async (data, ownerId) => {
 };
 
 export const getFamilyService = async ({ id }) => {
+  await connectDB();
   const user = await User.findById(id)
     .populate({
       path: "family",
@@ -98,7 +102,7 @@ export const getFamilyService = async ({ id }) => {
 };
 
 export const getFamilyOwnerService = async (id) => {
-  // console.log(id);
+  await connectDB();
   const owner = await Family.findOne({ owner: id });
 
   // console.log(owner);
@@ -107,6 +111,7 @@ export const getFamilyOwnerService = async (id) => {
 };
 
 export const removeMemberService = async (ownerId, memberId) => {
+  await connectDB();
   if (ownerId === memberId) {
     const error = new Error("Can't remove your self");
     error.statusCode = 404;

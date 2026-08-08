@@ -3,8 +3,10 @@ import bcrypt from "bcryptjs";
 // import generateToken from "../utils/generateToken.js";
 import cookies from "cookie-parser";
 import uploadOnCloudinary from "../config/cloudinary.js";
+import connectDB from "../config/dbConnect.js";
 
 export const register = async (userData) => {
+  await connectDB();
   const { name, email, password, profileImage } = userData;
 
   let imageUrl = "";
@@ -35,12 +37,14 @@ export const register = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+  await connectDB(); // <-- this line was missing
+
   const { email, password } = userData;
 
   const existUser = await User.findOne({ email });
 
   if (!existUser) {
-    const error = new Error("User dose not exists");
+    const error = new Error("User does not exist");
     error.statusCode = 409;
     throw error;
   }
@@ -48,7 +52,7 @@ export const loginUser = async (userData) => {
   const match = await bcrypt.compare(password, existUser.password);
 
   if (!match) {
-    const error = new Error("Password not match");
+    const error = new Error("Password does not match");
     error.statusCode = 401;
     throw error;
   }

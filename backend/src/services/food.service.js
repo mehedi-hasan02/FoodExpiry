@@ -1,9 +1,11 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
+import connectDB from "../config/dbConnect.js";
 import Family from "../models/family.model.js";
 import Food from "../models/food.model.js";
 import { getExpiryStatus } from "../utils/calculateExpiry.js";
 
 export const insertFood = async (data) => {
+  await connectDB();
   const {
     user,
     name,
@@ -41,6 +43,7 @@ export const insertFood = async (data) => {
 };
 
 export const updateFoodService = async (id, data) => {
+  await connectDB();
   const updatedFood = await Food.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,
@@ -50,26 +53,28 @@ export const updateFoodService = async (id, data) => {
 };
 
 export const deleteFoodService = async (id) => {
+  await connectDB();
   const deleteFood = await Food.findByIdAndDelete(id);
 
   return deleteFood;
 };
 
 export const getAllFoodService = async () => {
+  await connectDB();
   const foods = await Food.find();
 
   return foods;
 };
 
 export const getMyFoodService = async (id) => {
-  // console.log(id);
+  await connectDB();
   const foods = await Food.find({ user: id });
-  // console.log(foods);
 
   return foods;
 };
 
 export const getFamilyFoodService = async (id) => {
+  await connectDB();
   const family = await Family.findOne({
     $or: [{ owner: id }, { "members.user": id }],
   })
@@ -125,6 +130,7 @@ export const getFamilyFoodService = async (id) => {
 };
 
 export const getFoodByIdService = async (id) => {
+  await connectDB();
   return await Food.findById(id);
 };
 
@@ -134,6 +140,7 @@ export const searchFoodService = async (
   location = "",
   status = "",
 ) => {
+  await connectDB();
   const query = {};
   if (name) {
     query.name = {
@@ -166,6 +173,7 @@ export const searchFoodService = async (
 };
 
 export const foodNeedToReminder = async () => {
+  await connectDB();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

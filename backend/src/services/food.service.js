@@ -121,8 +121,6 @@ export const getFamilyFoodService = async (id) => {
     user: { $in: uniqueUserIds },
   }).lean();
 
-  // console.log(family);
-
   return {
     familyFoods,
     familyMembers: [[family.familyName], [...members]],

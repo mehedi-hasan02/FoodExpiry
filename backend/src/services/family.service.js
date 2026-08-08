@@ -6,8 +6,6 @@ export const createFamilyService = async (data) => {
   await connectDB();
   const { familyName, owner, familyImage } = data;
 
-  //   console.log(owner);
-
   const existFamily = await Family.findOne({ owner });
 
   if (existFamily) {
@@ -47,8 +45,6 @@ export const addFamilyMemberService = async (data, ownerId) => {
   }
 
   const family = await Family.findOne({ owner: ownerId });
-
-  // console.log(family._id);
 
   if (!family) {
     const error = new Error("Family not found");
@@ -104,8 +100,6 @@ export const getFamilyService = async ({ id }) => {
 export const getFamilyOwnerService = async (id) => {
   await connectDB();
   const owner = await Family.findOne({ owner: id });
-
-  // console.log(owner);
 
   return owner;
 };

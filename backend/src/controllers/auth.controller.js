@@ -9,21 +9,13 @@ import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res, next) => {
   try {
-    // console.log();
     const profileImage = req.file?.path;
     const user = await register({
       ...req.body,
       profileImage,
     });
 
-    // console.log("From Reg");
-    // console.log(user);
-    // console.log(user._id);
-    // console.log(user.email);
-
     const token = generateToken(user._id, user.email);
-
-    // console.log(user._id);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -49,11 +41,6 @@ export const signUp = async (req, res, next) => {
 export const logIn = async (req, res, next) => {
   try {
     const user = await loginUser(req.body);
-
-    // console.log("From login");
-    // console.log(user);
-    // console.log(user.id);
-    // console.log(user.email);
 
     const token = generateToken(user.id, user.email);
 

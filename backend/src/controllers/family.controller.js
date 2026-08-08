@@ -8,8 +8,6 @@ import {
 
 export const createFamilyController = async (req, res, next) => {
   try {
-    // console.log("From family controller");
-    // console.log(req.user.id);
     const family = await createFamilyService({
       ...req.body,
       owner: req.user.id,
@@ -64,10 +62,7 @@ export const getFamilyController = async (req, res, next) => {
 
 export const getFamilyOwnerController = async (req, res, next) => {
   try {
-    // console.log(req.user.id);
     const owner = await getFamilyOwnerService(req.user.id);
-
-    // console.log(owner);
 
     if (!owner) {
       return res.status(404).json({

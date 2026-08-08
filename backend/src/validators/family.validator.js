@@ -1,8 +1,6 @@
 export const validateFamilyData = async (req, res, next) => {
   const { familyName } = req.body;
 
-  // console.log(familyName);
-
   if (!familyName) {
     return res.status(400).json({
       success: false,

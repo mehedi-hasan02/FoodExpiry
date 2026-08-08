@@ -30,8 +30,6 @@ export const validateAddFood = (req, res, next) => {
 
   const dateDifferent = expiry - today;
 
-  console.log(dateDifferent);
-
   if (dateDifferent < 0) {
     return res.status(400).json({
       seccess: false,

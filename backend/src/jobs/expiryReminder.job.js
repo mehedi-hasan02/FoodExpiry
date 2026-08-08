@@ -31,11 +31,13 @@ const groupFoodsByUser = (foods) => {
 };
 
 export const startExpiryReminderJob = () => {
-  cron.schedule("0 8 * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     try {
       const foods = await foodNeedToReminder();
 
       const groupedFoods = groupFoodsByUser(foods);
+
+      console.log("hello");
 
       for (const user of groupedFoods) {
         await sendExpiryReminderMail(user.email, user.name, user.foods);

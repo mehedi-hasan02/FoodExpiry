@@ -66,9 +66,7 @@ export const getAllFoodController = async (req, res, next) => {
 
 export const getMyFoodController = async (req, res, next) => {
   try {
-    // console.log("hello");
     const foods = await getMyFoodService(req.user.id);
-    // console.log(foods);
 
     res.status(200).json({
       success: true,
@@ -82,8 +80,6 @@ export const getMyFoodController = async (req, res, next) => {
 export const getFamilyFoodController = async (req, res, next) => {
   try {
     const familyFoods = await getFamilyFoodService(req.user.id);
-
-    // console.log(familyFoods);
 
     res.status(200).json({ familyFoods });
   } catch (error) {

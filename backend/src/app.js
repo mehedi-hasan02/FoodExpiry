@@ -7,15 +7,18 @@ import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 import foodRoute from "./routes/food.route.js";
 import familyRoute from "./routes/family.route.js";
+
 import errorHandler from "./middleware/error.middleware.js";
 
 dotenv.config();
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_URL].filter(
-  Boolean,
-);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://foodexpiry.vercel.app",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
 app.use(
   cors({

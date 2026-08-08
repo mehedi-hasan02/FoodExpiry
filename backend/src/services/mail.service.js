@@ -83,7 +83,7 @@ export const sendExpiryReminderMail = async (email, name, foods) => {
 
               <div style="text-align:center;margin-top:30px;">
                 <a
-                  href="http://localhost:5173/my-foods"
+                  href="https://foodexpiry.vercel.app/my-foods"
                   style="
                     display:inline-block;
                     background:#16a34a;

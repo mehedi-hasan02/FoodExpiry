@@ -2,6 +2,7 @@ import uploadOnCloudinary from "../config/cloudinary.js";
 import connectDB from "../config/dbConnect.js";
 import Family from "../models/family.model.js";
 import Food from "../models/food.model.js";
+import User from "../models/user.model.js";
 import { getExpiryStatus } from "../utils/calculateExpiry.js";
 
 export const insertFood = async (data) => {

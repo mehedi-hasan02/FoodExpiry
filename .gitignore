@@ -10,3 +10,7 @@ backend/node_modules/
 backend/.vercel/
 .vercel
 .env*
+
+
+# macOS
+.DS_Store

@@ -55,10 +55,16 @@ const Navbar = ({ expanded, setExpanded }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen shadow-md z-50 flex flex-col justify-between transition-all duration-300 ${
+      className={`fixed top-0 left-0 shadow-md z-50 flex flex-col justify-between transition-all duration-300 ${
         expanded ? "w-64" : "w-16"
       }`}
-      style={{ backgroundColor: "#ffffff", color: "#1f2937" }}
+      style={{
+        backgroundColor: "#ffffff",
+        color: "#1f2937",
+        top: 0,
+        bottom: 0,
+        height: "100dvh",
+      }}
     >
       <div>
         {/* Top: Logo + Toggle */}
@@ -122,7 +128,7 @@ const Navbar = ({ expanded, setExpanded }) => {
       </div>
 
       {/* Bottom: Profile */}
-      <div className="relative px-3 pb-6" ref={accountRef}>
+      <div className="relative px-1 pb-6" ref={accountRef}>
         <div
           role="button"
           onClick={() => setAccountOpen((prev) => !prev)}

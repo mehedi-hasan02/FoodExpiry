@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import connectDB from "../config/dbConnect.js";
 
 export const validUpdatePassword = async (req, res, next) => {
+  await connectDB();
   try {
     const { oldPassword, newPassword } = req.body;
 

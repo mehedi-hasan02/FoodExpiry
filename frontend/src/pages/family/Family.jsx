@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaUserPlus } from "react-icons/fa";
+import { FaLeaf, FaUserPlus } from "react-icons/fa";
 import FamilyCard from "../../components/family/FamilyCard";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
@@ -17,6 +17,7 @@ const Family = () => {
   const [members, setMembers] = useState([]);
   const [owner, setOwner] = useState(false);
   const [familyName, setFamilyName] = useState("");
+  const [loading, setLoading] = useState(false);
   const hasFamily = !!userData?.family;
 
   const findOwner = async () => {
@@ -36,6 +37,7 @@ const Family = () => {
 
   const getFamilyMembers = async () => {
     try {
+      setLoading(true);
       const familyData = await axios.get(`${server_url}/family`, {
         withCredentials: true,
       });
@@ -52,6 +54,8 @@ const Family = () => {
       setMembers(formattedMembers);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,6 +87,15 @@ const Family = () => {
       getFamilyMembers();
     }
   }, [userData]);
+
+  if (loading) {
+    return (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 text-green-600 text-4xl animate-ping">
+        <FaLeaf />
+        <span className=" font-bold whitespace-nowrap">FoodExpiry</span>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">

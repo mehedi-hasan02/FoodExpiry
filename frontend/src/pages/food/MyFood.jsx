@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import { FaSearch, FaFilter, FaPlus } from "react-icons/fa";
+import { FaSearch, FaFilter, FaPlus, FaLeaf } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import FoodCard from "../../components/food/FoodCard";
 import axios from "axios";
@@ -25,6 +25,7 @@ const MyFood = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const getMyFoods = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get(`${server_url}/myfoods`, {
         withCredentials: true,
@@ -100,6 +101,15 @@ const MyFood = () => {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 text-green-600 text-4xl animate-ping">
+        <FaLeaf />
+        <span className=" font-bold whitespace-nowrap">FoodExpiry</span>
+      </div>
+    );
+  }
 
   return (
     <div

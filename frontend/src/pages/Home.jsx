@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { FaSearch } from "react-icons/fa";
+import { FaLeaf, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import { AuthContext } from "../context/AuthProvider";
@@ -131,6 +131,15 @@ const Home = () => {
   const currentFoods = filteredFoods.slice(indexOfFirstFood, indexOfLastFood);
 
   const totalPages = Math.ceil(filteredFoods.length / foodsPerPage);
+
+  if (loading) {
+    return (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 text-green-600 text-4xl animate-ping">
+        <FaLeaf />
+        <span className=" font-bold whitespace-nowrap">FoodExpiry</span>
+      </div>
+    );
+  }
 
   return (
     <div

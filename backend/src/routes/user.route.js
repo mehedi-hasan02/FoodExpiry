@@ -16,7 +16,8 @@ userRoute.get("/user/me", authMiddleWare, getLoginUserController);
 userRoute.get("/user/:email", getUserByEmailController);
 userRoute.put("/user", updateUserDataController);
 userRoute.put(
-  "/user/password",
+  "/user/change-password",
+  authMiddleWare,
   validUpdatePassword,
   updateUserPasswordController,
 );

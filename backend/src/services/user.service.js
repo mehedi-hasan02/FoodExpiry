@@ -34,7 +34,11 @@ export const updateUserDataService = async (data) => {
   return updateUser;
 };
 
-export const updateUserPasswordService = async (email, newPassword) => {
+export const updateUserPasswordService = async (
+  email,
+  oldPassword,
+  newPassword,
+) => {
   await connectDB();
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 

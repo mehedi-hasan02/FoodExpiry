@@ -78,8 +78,12 @@ export const updateUserDataController = async (req, res) => {
 
 export const updateUserPasswordController = async (req, res, next) => {
   try {
-    const { email, password, newPassword } = req.body;
-    const user = await updateUserPasswordService(email, newPassword);
+    const { oldPassword, newPassword } = req.body;
+    const user = await updateUserPasswordService(
+      req.user.email,
+      oldPassword,
+      newPassword,
+    );
 
     res.status(200).json({
       message: "Password update successful",

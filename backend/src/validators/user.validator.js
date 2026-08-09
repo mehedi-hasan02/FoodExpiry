@@ -3,9 +3,9 @@ import User from "../models/user.model.js";
 
 export const validUpdatePassword = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { oldPassword, newPassword } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: req.user.email });
 
     if (!user) {
       return res.status(404).json({
@@ -13,7 +13,7 @@ export const validUpdatePassword = async (req, res, next) => {
       });
     }
 
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(oldPassword, user.password);
 
     if (!match) {
       return res.status(400).json({

@@ -1,6 +1,10 @@
 {
   "crons": [
     {
+      "path": "/api/update-expiry-status",
+      "schedule": "0 3 * * *"
+    },
+    {
       "path": "/api/send-expiry-reminders",
       "schedule": "0 3 * * *"
     }

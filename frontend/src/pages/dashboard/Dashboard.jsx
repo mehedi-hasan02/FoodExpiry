@@ -103,8 +103,10 @@ const Dashboard = () => {
         withCredentials: true,
       });
 
-      setFamilyMembers(data.familyFoods.familyMembers[1]);
-      setFamilyName(data.familyFoods.familyMembers[0]);
+      // console.log(data.familyFoods);
+
+      setFamilyMembers(data.familyFoods.familyMembers);
+      setFamilyName(data.familyFoods.familyName);
 
       const foods = data.familyFoods.familyFoods;
 

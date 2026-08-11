@@ -76,6 +76,7 @@ export const getMyFoodService = async (id) => {
 
 export const getFamilyFoodService = async (id) => {
   await connectDB();
+
   const family = await Family.findOne({
     $or: [{ owner: id }, { "members.user": id }],
   })
@@ -84,13 +85,17 @@ export const getFamilyFoodService = async (id) => {
     .lean();
 
   if (!family) {
+    const familyFoods = await Food.find({
+      user: id,
+    }).lean();
+
     return {
-      familyFoods: [],
+      familyName: null,
+      familyFoods,
       familyMembers: [],
     };
   }
 
-  // Owner
   const owner = {
     _id: family.owner._id,
     name: family.owner.name,
@@ -99,7 +104,6 @@ export const getFamilyFoodService = async (id) => {
     role: "Owner",
   };
 
-  // Members
   const members = family.members.map((member) => ({
     _id: member.user._id,
     name: member.user.name,
@@ -109,7 +113,6 @@ export const getFamilyFoodService = async (id) => {
     joinedAt: member.joinedAt,
   }));
 
-  // All family user IDs
   const userIds = [
     family.owner._id,
     ...family.members.map((member) => member.user._id),
@@ -117,14 +120,14 @@ export const getFamilyFoodService = async (id) => {
 
   const uniqueUserIds = [...new Set(userIds.map((id) => id.toString()))];
 
-  // Get all family foods
   const familyFoods = await Food.find({
     user: { $in: uniqueUserIds },
   }).lean();
 
   return {
+    familyName: family.familyName,
     familyFoods,
-    familyMembers: [[family.familyName], [...members]],
+    familyMembers: [...members],
   };
 };
 

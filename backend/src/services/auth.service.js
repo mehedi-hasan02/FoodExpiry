@@ -9,10 +9,10 @@ export const register = async (userData) => {
   await connectDB();
   const { name, email, password, profileImage } = userData;
 
-  let imageUrl = "";
-  if (profileImage) {
-    imageUrl = await uploadOnCloudinary(profileImage);
-  }
+  // let imageUrl = "";
+  // if (profileImage) {
+  //   imageUrl = await uploadOnCloudinary(profileImage);
+  // }
 
   const existUser = await User.findOne({ email });
 
@@ -28,7 +28,7 @@ export const register = async (userData) => {
     name,
     email,
     password: hashedPassword,
-    profileImage: imageUrl,
+    profileImage,
   });
 
   // const token = generateToken(email);

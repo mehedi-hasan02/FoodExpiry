@@ -5,11 +5,14 @@ import Personal from "../../components/profile/Personal";
 import Account from "../../components/profile/Account";
 
 const Profile = () => {
-  const { userData } = useContext(AuthContext);
-  console.log(userData.name);
+  const { userData, setUserData, server_url } = useContext(AuthContext);
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
-      <ProfileHeader userData={userData} />
+      <ProfileHeader
+        userData={userData}
+        setUserData={setUserData}
+        server_url={server_url}
+      />
       <Personal userData={userData} />
       <Account />
     </div>

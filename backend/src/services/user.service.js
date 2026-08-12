@@ -21,17 +21,24 @@ export const getLoginUserService = async (id) => {
   return await User.findById(id).select("-password");
 };
 
-export const updateUserDataService = async (data) => {
+export const updateUserDataService = async (email, data) => {
   await connectDB();
-  const { name, email, profileImage } = data;
 
-  const updateUser = await User.findOneAndUpdate(
-    { email },
-    { name, profileImage },
-    { returnDocument: "after" },
-  );
+  const { name, profileImage } = data;
 
-  return updateUser;
+  const updateData = {
+    name,
+  };
+
+  if (profileImage) {
+    updateData.profileImage = profileImage;
+  }
+
+  const updatedUser = await User.findOneAndUpdate({ email }, updateData, {
+    new: true,
+  });
+
+  return updatedUser;
 };
 
 export const updateUserPasswordService = async (

@@ -1,3 +1,4 @@
+import uploadOnCloudinary from "../config/cloudinary.js";
 import {
   deleteFoodService,
   getAllFoodService,
@@ -11,7 +12,8 @@ import {
 
 export const addFood = async (req, res, next) => {
   try {
-    let image = req.file?.path;
+    // console.log(req.file);
+    const image = await uploadOnCloudinary(req.file?.buffer);
     const food = await insertFood({
       ...req.body,
       image,
@@ -28,7 +30,21 @@ export const addFood = async (req, res, next) => {
 
 export const updateFood = async (req, res, next) => {
   try {
-    const updatedFood = await updateFoodService(req.params.id, req.body);
+    let image;
+
+    if (req.file) {
+      image = await uploadOnCloudinary(req.file.buffer);
+    }
+
+    const updateData = {
+      ...req.body,
+    };
+
+    if (image) {
+      updateData.image = image;
+    }
+
+    const updatedFood = await updateFoodService(req.params.id, updateData);
 
     res.status(200).json({
       message: "Food updated successfully",

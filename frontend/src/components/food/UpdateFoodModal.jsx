@@ -26,8 +26,6 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
     ...imageRegister
   } = register("image");
 
-  // console.log(food);
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -58,13 +56,13 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
     try {
       const formData = new FormData();
 
-      formData.append("name", data.name);
-      formData.append("category", data.category);
-      formData.append("quantity", data.quantity);
-      formData.append("unit", data.unit);
-      formData.append("expiryDate", data.expiryDate);
-      formData.append("location", data.location);
-      formData.append("notes", data.notes);
+      if (data.name) formData.append("name", data.name);
+      if (data.category) formData.append("category", data.category);
+      if (data.quantity) formData.append("quantity", data.quantity);
+      if (data.unit) formData.append("unit", data.unit);
+      if (data.expiryDate) formData.append("expiryDate", data.expiryDate);
+      if (data.location) formData.append("location", data.location);
+      if (data.notes) formData.append("notes", data.notes);
 
       if (data.image?.[0]) {
         formData.append("image", data.image[0]);
@@ -134,7 +132,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                     backgroundColor: "transparent",
                     color: "#1f2937",
                   }}
-                  {...register("name", { required: "Food name is required" })}
+                  {...register("name")}
                 />
               </label>
 
@@ -164,7 +162,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                   color: "#1f2937",
                   borderColor: "#d1d5db",
                 }}
-                {...register("category", { required: "Category is required" })}
+                {...register("category")}
               >
                 <option value="">Select Category</option>
                 <option value="Fruits">Fruits</option>
@@ -216,9 +214,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                     backgroundColor: "transparent",
                     color: "#1f2937",
                   }}
-                  {...register("quantity", {
-                    required: "Quantity is required",
-                  })}
+                  {...register("quantity")}
                 />
               </label>
 
@@ -248,7 +244,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                   color: "#1f2937",
                   borderColor: "#d1d5db",
                 }}
-                {...register("unit", { required: "Unit is required" })}
+                {...register("unit")}
               >
                 <option value="">Select Unit</option>
                 <option value="kg">kg</option>
@@ -295,9 +291,7 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
                     backgroundColor: "transparent",
                     color: "#1f2937",
                   }}
-                  {...register("expiryDate", {
-                    required: "Expiry date is required",
-                  })}
+                  {...register("expiryDate")}
                 />
               </label>
 

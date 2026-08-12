@@ -6,10 +6,11 @@ import {
   register,
 } from "../services/auth.service.js";
 import generateToken from "../utils/generateToken.js";
+import uploadOnCloudinary from "../config/cloudinary.js";
 
 export const signUp = async (req, res, next) => {
   try {
-    const profileImage = req.file?.path;
+    const profileImage = await uploadOnCloudinary(req.file?.buffer);
     const user = await register({
       ...req.body,
       profileImage,

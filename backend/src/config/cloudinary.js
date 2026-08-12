@@ -36,29 +36,33 @@ cloudinary.config({
 });
 
 const uploadOnCloudinary = async (buffer) => {
-  try {
-    if (!buffer) {
-      return null;
-    }
+  if (!buffer) {
+    return null;
+  }
 
-    return await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "foodexpiry",
+          resource_type: "image",
         },
         (error, result) => {
           if (error) {
+            console.log("Cloudinary upload error:", error);
             reject(error);
           } else {
-            resolve(result.secure_url);
+            resolve(result);
           }
         },
       );
 
-      Readable.from(buffer).pipe(stream);
+      uploadStream.end(buffer);
     });
+
+    return result.secure_url;
   } catch (error) {
-    console.log(error);
+    console.log("Cloudinary error:", error);
     throw error;
   }
 };

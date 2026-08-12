@@ -7,6 +7,7 @@ import { getExpiryStatus } from "../utils/calculateExpiry.js";
 
 export const insertFood = async (data) => {
   await connectDB();
+
   const {
     user,
     name,
@@ -20,11 +21,6 @@ export const insertFood = async (data) => {
     notes,
   } = data;
 
-  let imageUrl = "";
-  if (image) {
-    imageUrl = await uploadOnCloudinary(image);
-  }
-
   const expiryStatus = getExpiryStatus(expiryDate);
 
   const food = await Food.create({
@@ -34,7 +30,7 @@ export const insertFood = async (data) => {
     quantity,
     unit,
     expiryDate,
-    image: imageUrl,
+    image,
     location,
     status: expiryStatus,
     notes,
@@ -45,6 +41,7 @@ export const insertFood = async (data) => {
 
 export const updateFoodService = async (id, data) => {
   await connectDB();
+
   const updatedFood = await Food.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,

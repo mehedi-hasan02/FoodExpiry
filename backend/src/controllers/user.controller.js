@@ -1,3 +1,4 @@
+import uploadOnCloudinary from "../config/cloudinary.js";
 import {
   getAllUserService,
   getLoginUserService,
@@ -57,7 +58,16 @@ export const getLoginUserController = async (req, res, next) => {
 
 export const updateUserDataController = async (req, res) => {
   try {
-    const updatedUser = await updateUserDataService(req.body);
+    let profileImage;
+
+    if (req.file) {
+      profileImage = await uploadOnCloudinary(req.file.buffer);
+    }
+
+    const updatedUser = await updateUserDataService(req.user.email, {
+      ...req.body,
+      profileImage,
+    });
 
     if (!updatedUser) {
       return res.status(404).json({
@@ -70,6 +80,8 @@ export const updateUserDataController = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
+    console.log(error);
+
     return res.status(500).json({
       message: "Internal server error",
     });

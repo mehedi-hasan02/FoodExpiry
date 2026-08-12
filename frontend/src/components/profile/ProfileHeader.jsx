@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { FaEdit, FaUser } from "react-icons/fa";
+import EditProfileModal from "./EditProfileModal";
 
-const ProfileHeader = ({ userData }) => {
-  console.log(userData.name);
+const ProfileHeader = ({ userData, setUserData, server_url }) => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mx-auto max-w-7xl space-y-6 p-6 md:p-8 mb-6">
       <div className="flex flex-col md:flex-row items-center md:items-center gap-6">
@@ -32,10 +34,22 @@ const ProfileHeader = ({ userData }) => {
             })}
           </p>
         </div>
-        <button className="btn bg-green-500 hover:bg-green-600 text-white border-none">
+        <button
+          onClick={() => setShowModal(true)}
+          className="btn bg-green-500 hover:bg-green-600 text-white border-none"
+        >
           <FaEdit />
           Edit Profile
         </button>
+
+        {showModal && (
+          <EditProfileModal
+            userData={userData}
+            setUserData={setUserData}
+            server_url={server_url}
+            onClose={() => setShowModal(false)}
+          />
+        )}
       </div>
     </div>
   );

@@ -2,11 +2,15 @@
   "crons": [
     {
       "path": "/api/update-expiry-status",
-      "schedule": "0 3 * * *"
+      "schedule": "0 18 * * *"
     },
     {
       "path": "/api/send-expiry-reminders",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/delete-expired-food",
+      "schedule": "0 18 * * 5"
     }
   ]
 }

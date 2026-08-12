@@ -1,17 +1,16 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import {
-  // getUserDataService,
-  loginUser,
-  register,
-} from "../services/auth.service.js";
+import { loginUser, signUpService } from "../services/auth.service.js";
 import generateToken from "../utils/generateToken.js";
 import uploadOnCloudinary from "../config/cloudinary.js";
 
-export const signUp = async (req, res, next) => {
+export const signUpController = async (req, res, next) => {
   try {
-    const profileImage = await uploadOnCloudinary(req.file?.buffer);
-    const user = await register({
+    const profileImage = req.file
+      ? await uploadOnCloudinary(req.file.buffer)
+      : undefined;
+
+    const user = await signUpService({
       ...req.body,
       profileImage,
     });
@@ -20,7 +19,7 @@ export const signUp = async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV == "production",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -66,7 +65,7 @@ export const logOut = async (req, res, next) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     return res.status(200).json({

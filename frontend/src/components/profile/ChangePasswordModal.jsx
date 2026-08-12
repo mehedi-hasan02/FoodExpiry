@@ -2,8 +2,9 @@ import { useState } from "react";
 import { FaLock, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const ChangePasswordModal = ({ open, onClose, server_url }) => {
+const ChangePasswordModal = ({ open, setUserData, onClose, server_url }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -11,6 +12,8 @@ const ChangePasswordModal = ({ open, onClose, server_url }) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +49,17 @@ const ChangePasswordModal = ({ open, onClose, server_url }) => {
       setShowOldPassword(false);
       setShowNewPassword(false);
 
+      await axios.post(
+        `${server_url}/logout`,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+
       onClose();
+      setUserData(null);
+      navigate("/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to change password");
     } finally {

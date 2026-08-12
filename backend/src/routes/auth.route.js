@@ -1,9 +1,8 @@
 import express, { Router } from "express";
 import {
-  // getUserDataController,
   logIn,
   logOut,
-  signUp,
+  signUpController,
 } from "../controllers/auth.controller.js";
 import {
   validateLogin,
@@ -18,7 +17,7 @@ authRoute.post(
   "/signup",
   upload.single("profileImage"),
   validateRegister,
-  signUp,
+  signUpController,
 );
 authRoute.post("/login", validateLogin, logIn);
 authRoute.post("/logout", logOut);

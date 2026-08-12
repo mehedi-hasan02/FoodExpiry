@@ -5,7 +5,7 @@ import cookies from "cookie-parser";
 import uploadOnCloudinary from "../config/cloudinary.js";
 import connectDB from "../config/dbConnect.js";
 
-export const register = async (userData) => {
+export const signUpService = async (userData) => {
   await connectDB();
   const { name, email, password, profileImage } = userData;
 

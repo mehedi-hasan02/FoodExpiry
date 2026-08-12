@@ -66,7 +66,7 @@ export const updateUserDataController = async (req, res) => {
 
     const updatedUser = await updateUserDataService(req.user.email, {
       ...req.body,
-      profileImage,
+      ...(profileImage && { profileImage }),
     });
 
     if (!updatedUser) {

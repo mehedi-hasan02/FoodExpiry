@@ -6,7 +6,7 @@ import ChangePasswordModal from "./ChangePasswordModal";
 const Account = () => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
-  const { server_url } = useContext(AuthContext);
+  const { server_url, setUserData } = useContext(AuthContext);
 
   return (
     <>
@@ -43,6 +43,7 @@ const Account = () => {
 
       <ChangePasswordModal
         open={showPasswordModal}
+        setUserData={setUserData}
         onClose={() => setShowPasswordModal(false)}
         server_url={server_url}
       />

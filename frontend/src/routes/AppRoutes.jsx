@@ -10,6 +10,7 @@ import MyFood from "../pages/food/MyFood";
 import Family from "../pages/family/Family";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Profile from "../pages/profile/Profile";
+import NotFound from "../pages/NotFound";
 // import Dashboard from "../components/dashboard/Dashboard";
 
 const AppRoutes = () => {
@@ -47,6 +48,9 @@ const AppRoutes = () => {
         <Route path="/add-food" element={<AddFood />} />
         <Route path="/family-member" element={<Family />} />
         <Route path="/profile" element={<Profile />} />
+
+        {/* 404 not found */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

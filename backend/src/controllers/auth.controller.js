@@ -10,10 +10,14 @@ export const signUpController = async (req, res, next) => {
       ? await uploadOnCloudinary(req.file.buffer)
       : undefined;
 
+    console.log("PROFILE IMAGE:", profileImage);
+
     const user = await signUpService({
       ...req.body,
       profileImage,
     });
+
+    console.log("USER FROM DB:", user);
 
     const token = generateToken(user._id, user.email);
 
@@ -34,6 +38,7 @@ export const signUpController = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.error("SIGNUP ERROR:", error);
     next(error);
   }
 };

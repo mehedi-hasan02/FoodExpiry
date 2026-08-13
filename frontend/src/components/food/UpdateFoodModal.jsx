@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
+import imageCompression from "browser-image-compression";
 
 const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
   const { server_url } = useContext(AuthContext);
@@ -65,7 +66,13 @@ const UpdateFoodModal = ({ food, getMyFoods, setSelectedFood }) => {
       if (data.notes) formData.append("notes", data.notes);
 
       if (data.image?.[0]) {
-        formData.append("image", data.image[0]);
+        const compressedImage = await imageCompression(data.image?.[0], {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        formData.append("image", compressedImage);
       }
 
       const res = await axios.put(`${server_url}/food/${food._id}`, formData, {

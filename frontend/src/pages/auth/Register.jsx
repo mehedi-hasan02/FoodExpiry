@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import imageCompression from "browser-image-compression";
 import axios from "axios";
 import {
   FaUser,
@@ -47,7 +48,13 @@ const Register = () => {
       formData.append("password", data.password);
 
       if (data.profileImage?.[0]) {
-        formData.append("profileImage", data.profileImage[0]);
+        const compressedImage = await imageCompression(data.profileImage?.[0], {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        formData.append("profileImage", compressedImage);
       }
 
       const res = await axios.post(`${server_url}/signup`, formData, {

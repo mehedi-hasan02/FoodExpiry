@@ -9,6 +9,7 @@ import {
 import { AuthContext } from "../../context/AuthProvider";
 import axios from "axios";
 import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 
 const FoodForm = () => {
   const { server_url, userData } = useContext(AuthContext);
@@ -48,7 +49,13 @@ const FoodForm = () => {
       formData.append("notes", data.notes);
 
       if (data.image?.[0]) {
-        formData.append("image", data.image[0]);
+        const compressedImage = await imageCompression(data.image?.[0], {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        formData.append("image", compressedImage);
       }
 
       const res = await axios.post(`${server_url}/food`, formData, {

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 
 const EditProfileModal = ({ userData, setUserData, server_url, onClose }) => {
   const [name, setName] = useState(userData?.name || "");
@@ -28,7 +29,13 @@ const EditProfileModal = ({ userData, setUserData, server_url, onClose }) => {
       formData.append("name", name);
 
       if (imageFile) {
-        formData.append("profileImage", imageFile);
+        const compressedImage = await imageCompression(imageFile, {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 800,
+          useWebWorker: true,
+        });
+
+        formData.append("profileImage", compressedImage);
       }
 
       const res = await axios.put(`${server_url}/user/update`, formData, {
